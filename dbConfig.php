@@ -32,13 +32,16 @@
 
         $pdo->exec($sql);
 
-        $sql = "CREATE TABLE IF NOT EXISTS trainee_list( 
-            trainee_no int(15) AUTO_INCREMENT PRIMARY KEY, 
-            trainee_id_display varchar(20) NOT NULL, 
+        $sql = "CREATE TABLE IF NOT EXISTS intern_list( 
+            intern_no int(15) AUTO_INCREMENT PRIMARY KEY, 
+            intern_id_display varchar(20) NOT NULL, 
             date_of_employment varchar(8) NOT NULL, 
-            trainee_last_name varchar(20) NOT NULL, 
-            trainee_first_name varchar(30) NOT NULL, 
-            trainee_dept varchar(30) NOT NULL, 
+            intern_last_name varchar(20) NOT NULL, 
+            intern_first_name varchar(30) NOT NULL, 
+            intern_middle_initial varchar(2) NOT NULL,
+            intern_course varchar(50) NOT NULL, 
+            intern_school varchar(50) NOT NULL,
+            intern_dept varchar(30) NOT NULL, 
             total_hours int(5) NOT NULL, 
             accumulated_hours int(5) NOT NULL, 
             remaining_hours int(5) NOT NULL 

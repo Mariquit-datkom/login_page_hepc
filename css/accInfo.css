@@ -1,0 +1,58 @@
+.acc-info-container {
+    background-color: white;
+    padding: 15px 40px 15px 40px;
+    margin: 50px auto 0px auto; 
+    width: 85%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+.form-title {
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    border-bottom: #333 1px solid;
+}
+
+.row {
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-label {
+    font-weight: bold;
+    color: #333;
+    width: auto;
+    flex-shrink: 0;
+}
+.general-input {
+    width: 300px;
+    padding: 10px 12px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.middle-initial {
+    max-width: 100px;
+}
+
+.employment-date {
+    max-width: 130px;
+}
+
+.hours-input {
+    max-width: 200px;
+}
