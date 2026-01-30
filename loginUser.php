@@ -51,6 +51,6 @@
         </form>
     </div>
 
-    <script src="js/stateReplacement.js"></script>
+    <script src="js/formCleaner.js"></script>
 </body>
 </html>
