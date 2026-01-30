@@ -21,13 +21,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/adminDashboardPublic.css">
-    <title>Dashboard - Admin</title>
+    <title>Requests - Admin</title>
 </head>
 <body>
     <header>
         <div class="header-left">
             <img src="assets/company_logo.png" alt="company_logo" class="company-logo">
-            <span class="dashboard-title"> Admin Dashboard </span>
+            <span class="dashboard-title"> Requests </span>
         </div>
 
         <div class="header-right">
@@ -43,7 +43,7 @@
 
     <nav class="admin-nav-bar">
         <div class="nav-links">
-            <a href="javascript:void(0)" class="nav-item 
+            <a href="adminDashboard.php" class="nav-item 
             <?php echo ($currentPage === 'adminDashboard.php') ? 'active' : ''; ?>" 
             data-text="Dashboard">Dashboard
             </a>
@@ -53,7 +53,7 @@
             data-text="Interns List">Interns List
             </a>
 
-            <a href="requestsPage.php" class="nav-item
+            <a href="javascript:void(0)" class="nav-item
             <?php echo ($currentPage === 'requestsPage.php') ? 'active' : ''; ?>" 
             data-text="Requests">Requests
             </a>
@@ -62,7 +62,7 @@
             <?php echo ($currentPage === 'registerIntern.php') ? 'active' : ''; ?>" 
             data-text="Register Intern">Register Intern
             </a>
-        </div>
+         </div>
     </nav>
 
     <script src="js/dropDownMenu.js"></script>
