@@ -18,13 +18,13 @@
             $stmt = $pdo->prepare($sql);
         
             if ($stmt->execute(['username' => $username, 'password' => $password])) {
-                $_SESSION['registration_msg'] = "<p style='color: green;'>User registered successfully!</p>";
+                $_SESSION['registration_msg'] = "<p style='color: green;'>User registered successfully! Redirecting back to dashboard..</p>";
             } else {
                 $_SESSION['registration_msg'] = "<p style='color: red;'>Error during registration.</p>";
             }
         }
 
-        header("Location: registerUser.php");
+        header("Location: registerIntern.php");
         exit();
     }
 ?>

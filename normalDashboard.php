@@ -12,7 +12,7 @@
     }
 
     $currentUser = $_SESSION['username'];
-
+    $currentPage = basename($_SERVER['PHP_SELF']);
 ?>
 
 <!DOCTYPE html>
@@ -32,8 +32,37 @@
 
         <div class="header-right">
             <span class="username"> <?php echo htmlspecialchars($currentUser); ?> </span>
-            <img src="assets/user_avatar.png" alt="user_avatar" class="user-avatar">
+            <div class="user-menu-container">
+                <img src="assets/user_avatar.png" alt="user_avatar" class="user-avatar" id="user-avatar-btn">
+                <div class="dropdown-content" id="user-avatar-dropdown">
+                    <a href="loginUser.php?action=logout">Logout</a>
+                </div>
+            </div>
         </div>
     </header>
+    
+    <nav class="nav-bar">
+        <div class="nav-links">
+            <a href="javascript:void(0)" class="nav-item
+            <?php echo ($currentPage === 'normalDashboard.php') ? 'active' : ''; ?>"
+            data-text="Dashboard">Dashboard
+            </a>
+            <a href="accInfo.php" class="nav-item
+            <?php echo ($currentPage === 'accInfo.php') ? 'active' : ''; ?>"
+            data-text="Account Info">Account Info
+            </a>
+            <a href="timeSheet.php" class="nav-item
+            <?php echo ($currentPage === 'timeSheet.php') ? 'active' : ''; ?>"
+            data-text="Time Sheet">Time Sheet
+            </a>
+            <a href="submitRequest.php" class="nav-item
+            <?php echo ($currentPage === 'submitRequest.php') ? 'active' : ''; ?>"
+            data-text="Submit Request">Submit Request
+            </a>
+        </div>
+    </nav>
+
+    <script src="js/dropDownMenu.js"></script>
+    <script src="js/backBtnKiller.js"></script>
 </body>
 </html>

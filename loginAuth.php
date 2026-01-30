@@ -22,7 +22,7 @@
             
         } else {
 
-            $_SESSION['error'] = "<p class='errorMessage'> Invalid username or password. Please try again. </p>";
+            $_SESSION['error'] = "<p style='color: red;'> Invalid username or password. Please try again. </p>";
             header("Location: loginUser.php");
             exit();
         }
