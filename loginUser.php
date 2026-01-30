@@ -1,6 +1,18 @@
 <?php
     require 'dbConfig.php';
     session_start();
+    
+    header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+    header("Cache-Control: post-check=0, pre-check=0", false);
+    header("Pragma: no-cache");
+
+    if (isset($_GET['action']) && $_GET['action'] === 'logout') {
+
+        session_unset();    // Remove all session variables
+        session_destroy();  // Destroy the session
+        header("Location: loginUser.php"); // Redirect to clear the URL
+        exit();
+    }
 
     $confirmationMessage = "";
 

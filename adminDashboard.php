@@ -1,6 +1,10 @@
 <?php
     require 'dbConfig.php';
     session_start();
+    
+    header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+    header("Cache-Control: post-check=0, pre-check=0", false);
+    header("Pragma: no-cache");
 
     if (!isset($_SESSION['username'])){
         header("Location: loginUser.php");
@@ -28,8 +32,16 @@
 
         <div class="header-right">
             <span class="username"> <?php echo htmlspecialchars($currentUser); ?> </span>
-            <img src="assets/user_avatar.png" alt="user_avatar" class="user-avatar">
+            <div class="user-menu-container">
+                <img src="assets/user_avatar.png" alt="user_avatar" class="user-avatar" id="user-avatar-btn">
+                <div class="dropdown-content" id="user-avatar-dropdown">
+                    <a href="loginUser.php?action=logout">Logout</a>
+                </div>
+            </div>
         </div>
     </header>
+
+    <script src="js/dropDownMenu.js"></script>
+    <script src="js/backBtnKiller.js"></script>
 </body>
 </html>
