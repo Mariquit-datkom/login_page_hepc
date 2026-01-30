@@ -1,47 +1,26 @@
 <?php
-    require 'dbConfig.php';
     session_start();
-    
+
     header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-    header("Cache-Control: post-check=0, pre-check=0", false);
     header("Pragma: no-cache");
+
+    if (isset($_SESSION['username']) && !isset($_GET['action'])) {
+        header("Location: " . ( $_SESSION['username'] === 'admin' ? 'adminDashboard.php' : 'normalDashboard.php' ) );
+        exit();
+    }
 
     if (isset($_GET['action']) && $_GET['action'] === 'logout') {
 
-        session_unset();    // Remove all session variables
-        session_destroy();  // Destroy the session
-        header("Location: loginUser.php"); // Redirect to clear the URL
+        session_unset();
+        session_destroy();
+        header("Location: " . $_SERVER['PHP_SELF']);
         exit();
     }
 
     $confirmationMessage = "";
-
-    if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-
-        $sql = "SELECT * FROM users WHERE username = :username";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute(['username' => $username]);
-        $user = $stmt->fetch();
-
-        if ($user && password_verify($password, $user['password'])) {
-
-            $_SESSION['username'] = $user['username'];
-
-            if ($user['username'] === 'admin') {
-                $redirectURL = 'adminDashboard.php';
-                header("Location: $redirectURL");
-                exit();
-            } else {
-                $redirectURL = 'normalDashboard.php';
-                header("Location: $redirectURL");
-                exit();
-            }
-            
-        } else {
-            $confirmationMessage = "<p style='color: red;'>Invalid username or password.</p>";
-        }
+    if(isset($_SESSION['error'])) {
+        $confirmationMessage = $_SESSION['error'];
+        unset($_SESSION['error']);
     }
 ?>
 
@@ -57,19 +36,21 @@
     <div class="loginContainer">
         <h2 class="loginTitle"> Account Log In </h2>
         <?php echo $confirmationMessage; ?>
-        <form action="loginUser.php" method="POST">
+        <form action="loginAuth.php" method="POST" autocomplete="off">
             <div class="formGroup">
                 <label for="username" class="formLabel"> Username: </label>
                 <input type="text" class="formInput" id="username" name="username" required> <br> <br>
             </div>
             <div class="formGroup">
                 <label for="password" class="formLabel"> Password: </label>
-                <input type="password" class="formInput" id="password" name="password" required> <br> <br>
+                <input type="password" class="formInput" id="password" name="password" autocomplete="new-password" required> <br> <br>
             </div>
             <div class="loginButtonContainer">
                 <input type="submit" class="loginButton" value="Log In">
             </div>
         </form>
     </div>
+
+    <script src="js/stateReplacement.js"></script>
 </body>
 </html>

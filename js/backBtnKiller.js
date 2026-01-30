@@ -1,5 +1,9 @@
 window.addEventListener('pageshow', function (event) {
-    if (event.persisted || (typeof window.performance != "undefined" && window.performance.navigation.type === 2)) {
+    const historyTraversal = event.persisted || 
+        (typeof window.performance != "undefined" && 
+            performance.getEntriesByType("navigation")[0].type === "back_forward");
+
+    if (historyTraversal) {
         window.location.reload();
     }
 });
