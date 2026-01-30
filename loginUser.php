@@ -5,15 +5,7 @@
     header("Pragma: no-cache");
 
     if (isset($_SESSION['username']) && !isset($_GET['action'])) {
-        header("Location: " . ( $_SESSION['username'] === 'admin' ? 'adminDashboard.php' : 'normalDashboard.php' ) );
-        exit();
-    }
-
-    if (isset($_GET['action']) && $_GET['action'] === 'logout') {
-
-        session_unset();
-        session_destroy();
-        header("Location: " . $_SERVER['PHP_SELF']);
+        header("Location: " . ( $_SESSION['username'] === 'admin' ? 'adminDashboard.php' : 'internDashboard.php' ) );
         exit();
     }
 

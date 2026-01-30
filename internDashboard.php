@@ -20,7 +20,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/normalDashboard.css">
+    <link rel="stylesheet" href="css/internDashboardPublic.css">
     <title>Dashboard</title>
 </head>
 <body>
@@ -35,7 +35,7 @@
             <div class="user-menu-container">
                 <img src="assets/user_avatar.png" alt="user_avatar" class="user-avatar" id="user-avatar-btn">
                 <div class="dropdown-content" id="user-avatar-dropdown">
-                    <a href="loginUser.php?action=logout">Logout</a>
+                    <a href="logout.php">Logout</a>
                 </div>
             </div>
         </div>
@@ -44,7 +44,7 @@
     <nav class="nav-bar">
         <div class="nav-links">
             <a href="javascript:void(0)" class="nav-item
-            <?php echo ($currentPage === 'normalDashboard.php') ? 'active' : ''; ?>"
+            <?php echo ($currentPage === 'internDashboard.php') ? 'active' : ''; ?>"
             data-text="Dashboard">Dashboard
             </a>
             <a href="accInfo.php" class="nav-item
@@ -64,5 +64,6 @@
 
     <script src="js/dropDownMenu.js"></script>
     <script src="js/backBtnKiller.js"></script>
+    <script src="js/autoLogOutOnClose.js"></script>
 </body>
 </html>

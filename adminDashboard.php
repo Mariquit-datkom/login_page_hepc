@@ -35,7 +35,7 @@
             <div class="user-menu-container">
                 <img src="assets/user_avatar.png" alt="user_avatar" class="user-avatar" id="user-avatar-btn">
                 <div class="dropdown-content" id="user-avatar-dropdown">
-                    <a href="loginUser.php?action=logout">Logout</a>
+                    <a href="logout.php">Logout</a>
                 </div>
             </div>
         </div>
@@ -67,5 +67,6 @@
 
     <script src="js/dropDownMenu.js"></script>
     <script src="js/backBtnKiller.js"></script>
+    <script src="js/autoLogOutOnClose.js"></script>
 </body>
 </html>

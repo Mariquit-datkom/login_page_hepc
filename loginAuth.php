@@ -16,7 +16,7 @@
 
             $_SESSION['username'] = $user['username'];
 
-            $redirectURL = ($user['username'] === 'admin') ? 'adminDashboard.php' : 'normalDashboard.php';
+            $redirectURL = ($user['username'] === 'admin') ? 'adminDashboard.php' : 'internDashboard.php';
             header("Location: $redirectURL");
             exit();
             
