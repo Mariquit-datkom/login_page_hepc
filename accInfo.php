@@ -93,7 +93,7 @@
 
     <div class="acc-info-container">
         <div class="form-title-container">
-            <h2 class="form-title">Account Information</h2>
+            <h2 class="form-title">Profile Summary</h2>
             <?php echo $confirmationMessage ?>
         </div>
         <form action="accInfoAuth.php" method="POST" autocomplete="off">
