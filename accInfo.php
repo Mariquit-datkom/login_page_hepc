@@ -1,6 +1,6 @@
 <?php
-    require 'dbConfig.php';
-    session_start();
+    require_once 'dbConfig.php';
+    require_once 'sessionChecker.php';
     
     header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
     header("Cache-Control: post-check=0, pre-check=0", false);
@@ -125,5 +125,6 @@
 
     <script src="js/dropDownMenu.js"></script>
     <script src="js/backBtnKiller.js"></script>
+    <script src="js/sendHeartbeat.js"></script>
 </body>
 </html>

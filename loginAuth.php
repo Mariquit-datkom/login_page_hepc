@@ -1,6 +1,6 @@
 <?php
 
-    require 'dbConfig.php';
+    require_once 'dbConfig.php';
     session_start();
 
     if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -15,6 +15,10 @@
         if ($user && password_verify($password, $user['password'])) {
 
             $_SESSION['username'] = $user['username'];
+
+            $now = time();
+            $update = $pdo->prepare("UPDATE users SET last_ping = ? WHERE username = ?");
+            $update->execute([$now, $username]);
 
             $redirectURL = ($user['username'] === 'admin') ? 'adminDashboard.php' : 'internDashboard.php';
             header("Location: $redirectURL");

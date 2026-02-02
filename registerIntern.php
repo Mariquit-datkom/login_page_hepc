@@ -1,7 +1,7 @@
 <?php
 
-    require 'dbConfig.php';
-    session_start();
+    require_once 'dbConfig.php';
+    require_once 'sessionChecker.php';
 
 
     if (!isset($_SESSION['username']) || $_SESSION['username'] !== 'admin') {
@@ -54,6 +54,6 @@
         <script src="js/redirectBuffer.js"></script>
     <?php endif; ?>
 
-    <script src="js/autoLogOutOnClose.js"></script>
+    <script src="js/sendHeartbeat.js"></script>
 </body>
 </html>

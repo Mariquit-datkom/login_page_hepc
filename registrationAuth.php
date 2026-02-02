@@ -1,7 +1,6 @@
 <?php
 
-    require 'dbConfig.php';
-    session_start();
+    require_once 'dbConfig.php';
 
     if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
         $username = $_POST['username'];

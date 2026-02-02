@@ -27,7 +27,8 @@
         $sql = "CREATE TABLE IF NOT EXISTS users (
             db_id INT(11) AUTO_INCREMENT PRIMARY KEY,
             username VARCHAR(50) NOT NULL,
-            password VARCHAR(255) NOT NULL
+            password VARCHAR(255) NOT NULL,
+            last_ping int(11) DEFAULT 0
         )";
 
         $pdo->exec($sql);
