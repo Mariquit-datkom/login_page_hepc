@@ -1,0 +1,12 @@
+{
+    "name": "lenovo/login_page_hepc",
+    "authors": [
+        {
+            "name": "Mariquit-datkom",
+            "email": "lancemariquit.1214@gmail.com"
+        }
+    ],
+    "require": {
+        "phpoffice/phpspreadsheet": "^5.4"
+    }
+}
