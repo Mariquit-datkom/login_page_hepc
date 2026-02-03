@@ -3,13 +3,10 @@
     require_once 'dbConfig.php';
     session_start();
 
-    error_reporting(E_ALL);
-    ini_set('display_errors', 1);
-
-    $user_id = $_SESSION['user_id'];
+    $intern_display_id = $_SESSION['intern_display_id'];
     $templatePath = 'assets/spreadsheets/template/TIME_SHEET_SUMMARY.xlsx';
-    $targetDir = 'assets/spreadsheets/' . $user_id . '/';
-    $newFileName = 'TIME_SHEET_SUMMARY_' . $user_id . '.xlsx';
+    $targetDir = 'assets/spreadsheets/' . $intern_display_id . '/';
+    $newFileName =  $intern_display_id . 'TIME_SHEET_SUMMARY_.xlsx';
     $destinationPath = $targetDir . $newFileName;
 
     $_SESSION['time_sheet_template'] = $templatePath;

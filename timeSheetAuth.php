@@ -12,6 +12,7 @@
 
     if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
         $user_id = $_SESSION['user_id'];
+        $intern_display_id = $_SESSION['intern_display_id'];
         $date = $_POST['date'];
 
         $rawIn = $_POST['clock-in'];

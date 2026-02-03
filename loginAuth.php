@@ -21,7 +21,21 @@
             $update = $pdo->prepare("UPDATE users SET last_ping = ? WHERE username = ?");
             $update->execute([$now, $username]);
 
-            $redirectURL = ($user['username'] === 'admin') ? 'adminDashboard.php' : 'internDashboard.php';
+            if($user['username'] !== 'admin') {
+                $redirectURL = 'internDashboard.php';
+
+                $sql = "SELECT intern_display_id FROM intern_list WHERE user_id = :user_id";
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute(['user_id' => $_SESSION['user_id']]);
+                $intern = $stmt->fetch();
+
+                if($intern) {
+                    $intern_display_id = $intern['intern_display_id'];
+                    $_SESSION['intern_display_id'] = $intern_display_id;
+                }
+
+            }  else  $redirectURL = 'adminDashboard.php';
+
             header("Location: $redirectURL");
             exit();
             
