@@ -35,7 +35,7 @@
 
         $sql = "CREATE TABLE IF NOT EXISTS intern_list( 
             intern_id int(15) AUTO_INCREMENT PRIMARY KEY,
-            intern_display_id varchar(20) AS (CONCAT('ojt', LPAD(intern_id, 3, '0'))) VIRTUAL,
+            intern_display_id varchar(20) AS (CONCAT('ojt-', LPAD(intern_id, 3, '0'))) VIRTUAL,
             user_id int(11) NOT NULL, 
             date_of_employment varchar(15) NOT NULL, 
             intern_last_name varchar(20) NOT NULL, 
