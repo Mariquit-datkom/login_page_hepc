@@ -7,9 +7,9 @@
     ini_set('display_errors', 1);
 
     $user_id = $_SESSION['user_id'];
-    $templatePath = 'assets/spreadsheets/template/WEEKLY_TIME_SHEET_SUMMARY.xlsx';
+    $templatePath = 'assets/spreadsheets/template/TIME_SHEET_SUMMARY.xlsx';
     $targetDir = 'assets/spreadsheets/' . $user_id . '/';
-    $newFileName = 'TIME_SHEET_' . $user_id . '.xlsx';
+    $newFileName = 'TIME_SHEET_SUMMARY_' . $user_id . '.xlsx';
     $destinationPath = $targetDir . $newFileName;
 
     $_SESSION['time_sheet_template'] = $templatePath;

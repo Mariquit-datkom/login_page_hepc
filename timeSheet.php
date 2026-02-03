@@ -1,6 +1,7 @@
 <?php
     require_once 'dbConfig.php';
     require_once 'sessionChecker.php';
+    include 'fetchTimeSheetData.php';
 
     header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
     header("Cache-Control: post-check=0, pre-check=0", false);
@@ -19,6 +20,36 @@
     if (isset($_SESSION['timeSheet_msg'])) {
         $confirmationMessage = $_SESSION['timeSheet_msg'];
         unset($_SESSION['timeSheet_msg']); 
+    }
+
+    $sheetPath = $_SESSION['time_sheet_path'] ?? '';
+    $dataRows = getTimeSheetRows($sheetPath);
+    $tableRowsHtml = "";
+
+    if (!empty($dataRows)) {
+        foreach ($dataRows as $row) {
+            if (!empty(array_filter($row))) {
+                $tableRowsHtml .= '
+                <div class="table-cell-container">
+                    <div class="table-cell">
+                        <span class="table-data">' . htmlspecialchars($row[0]) . '</span>
+                    </div>
+                    <div class="table-cell">
+                        <span class="table-data">' . htmlspecialchars($row[1]) . '</span>
+                    </div>
+                    <div class="table-cell">
+                        <span class="table-data">' . htmlspecialchars($row[2]) . '</span>
+                    </div>
+                    <div class="table-cell">
+                        <span class="table-data">' . htmlspecialchars($row[3]) . '</span>
+                    </div>
+                </div>';
+            }
+        }
+    } else {
+        $tableRowsHtml = '<div class="no-data-msg" 
+        style="padding: 20px; text-align: center; color: #666;"
+        >No entries found yet.</div>';
     }
 ?>
 
@@ -89,10 +120,6 @@
                     <label for="clockOut" class="form-label">Clock Out:</label>
                     <input type="time" id="clock-out" name="clock-out" class="general-input">
                 </div>
-                <div class="form-group">
-                    <label for="totalHours" class="form-label">Total Hours:</label>
-                    <input type="text" id="total-hours" name="total-hours" class="general-input">
-                </div>
             </div>
             <div class="row">
                 <button type="submit" class="btn-submit">Add Entry</button>
@@ -104,7 +131,7 @@
 
     <div class="time-sheet-display-container">
         <div class="form-title-container">
-            <h2 class="form-title">Weekly Time Sheet Summary</h2>
+            <h2 class="form-title">Time Sheet Summary</h2>
         </div>
         <div class="time-sheet-table">
             <div class="table-headers">
@@ -121,6 +148,8 @@
                     <span class="table-header">Total Hours</span>
                 </div>
             </div>
+
+            <?php echo $tableRowsHtml; ?>
         </div>
     </div>
 

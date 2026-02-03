@@ -1,7 +1,7 @@
 .time-sheet-display-container, .time-sheet-input-container{
     background-color: #fff;
     padding: 5px 5% 15px 5%;
-    margin: 40px auto 50px auto; 
+    margin: 20px auto 25px auto; 
     width: 85%;
     max-width: 1200px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -13,11 +13,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.form-title-time-sheet-input {
-    border-bottom: #333 1px solid;
-    margin-bottom: 20px;
 }
 
 .form-title {
@@ -71,21 +66,26 @@
     cursor: pointer;
 }
 
-.table-headers {
+.time-sheet-table {
+    margin-bottom: 15px;
+}
+
+.table-headers, .table-cell-container {
     display: flex;
     justify-content: space-between;
-    font-weight: bold;
-    padding-bottom: 10px;
-    margin: 15px, 0;
 }
+
+.table-headers { 
+    border-top: 1px solid #333;
+    font-weight: bold;
+ }
 
 .table-header-container, .table-cell{
     flex: 1;
     text-align: center;
-    border-top: 1px solid #333;
     border-bottom: 1px solid #333;
     border-right: 1px solid #333;
-    padding: 10px;
+    padding: 15px;
 }
 
 .table-header-container:first-child, .table-cell:first-child{

@@ -13,9 +13,29 @@
     if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
         $user_id = $_SESSION['user_id'];
         $date = $_POST['date'];
-        $clockIn = $_POST['clock-in'];
-        $clockOut = $_POST['clock-out'];
-        $totalHours = $_POST['total-hours'];
+
+        $rawIn = $_POST['clock-in'];
+        $rawOut = $_POST['clock-out'];
+
+        $clockIn = !empty($_POST['clock-in']) ? date("g:i A", strtotime($rawIn)) : '';
+        $clockOut = !empty($_POST['clock-out']) ? date("g:i A", strtotime($rawOut)) : '';
+
+        $totalHours = "";
+        if (!empty($rawIn) && !empty($rawOut)) {
+            $time1 = strtotime($rawIn);
+            $time2 = strtotime($rawOut);
+            
+            $diff = $time2 - $time1;
+
+            if ($diff < 0) {
+                $diff += 86400; 
+            }
+
+            $hours = floor($diff / 3600);
+            $minutes = floor(($diff % 3600) / 60);
+
+            $totalHours = ($minutes > 0) ? "{$hours} hours {$minutes} minutes" : "{$hours} hours";
+        }
 
         $fileToRead = file_exists($_SESSION['time_sheet_path']) ? $_SESSION['time_sheet_path'] : $_SESSION['time_sheet_template'];
 
