@@ -15,18 +15,13 @@
         $totalHoursNeeded = $_POST['total-hours-needed'];
         $school = $_POST['school'];
 
-        $sql = "INSERT INTO intern_list (user_id, intern_last_name, intern_first_name, 
-        intern_middle_initial, date_of_employment, intern_course, intern_dept, 
-        total_hours_needed, school) 
-        VALUES (:user_id, :last_name, :first_name, :middle_initial, :employment_date, 
-        :course, :division_or_section, :total_hours_needed, :school)
-        ON DUPLICATE KEY UPDATE user_id = :user_id, intern_last_name = :last_name, 
+        $sql = "UPDATE intern_list SET intern_last_name = :last_name, 
         intern_first_name = :first_name, intern_middle_initial = :middle_initial,
         date_of_employment = :employment_date, intern_course = :course,
-        intern_dept = :division_or_section, total_hours_needed = :total_hours_needed, school = :school";
+        intern_dept = :division_or_section, total_hours_needed = :total_hours_needed, school = :school
+        WHERE user_id = :user_id";
 
         $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':user_id', $user_id);
         $stmt->bindParam(':last_name', $lastName);
         $stmt->bindParam(':first_name', $firstName);
         $stmt->bindParam(':middle_initial', $middleInitial);
@@ -35,6 +30,7 @@
         $stmt->bindParam(':division_or_section', $divisionOrSection);
         $stmt->bindParam(':total_hours_needed', $totalHoursNeeded);
         $stmt->bindParam(':school', $school);
+        $stmt->bindParam(':user_id', $user_id);
 
         if ($stmt->execute()) {
             $_SESSION['accinfo_msg'] = "<p style='color: green;'>Account information saved successfully!</p>";

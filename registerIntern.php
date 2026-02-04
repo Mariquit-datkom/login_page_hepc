@@ -36,7 +36,7 @@
             </div>
             <div class="formGroup">
                 <label for="password" class="formLabel"> Password: </label>  
-                <input type="password" class="formInput" id="password" name="password" required> <br> <br>
+                <input type="text" class="formInput" id="password" name="password" required> <br> <br>
             </div>
             <div class="registerButtonContainer">
                 <input type="submit" class="registerButton" value="Register">

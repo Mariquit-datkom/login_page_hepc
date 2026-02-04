@@ -16,8 +16,14 @@
         } else {
             $sql = "INSERT INTO users (username, password) VALUES (:username, :password)";
             $stmt = $pdo->prepare($sql);
+
         
             if ($stmt->execute(['username' => $username, 'password' => $password])) {
+                $userId = $pdo->lastInsertId();
+                $internSql = "INSERT INTO intern_list (user_id) VALUES (:user_id)";
+                $internStmt = $pdo->prepare($internSql);
+                $internStmt->execute(['user_id' => $userId]); 
+                
                 $_SESSION['registration_msg'] = "<p style='color: green;'>User registered successfully! Redirecting back to dashboard..</p>";
             } else {
                 $_SESSION['registration_msg'] = "<p style='color: red;'>Error during registration.</p>";
