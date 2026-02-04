@@ -86,8 +86,8 @@
                     <input type="date" id="date" name="date" class="general-input" value="<?php echo date('Y-m-d'); ?>" readonly>
                 </div>
                 <div class="form-group">
-                    <label for="attachment" class="form-label">Attachment (PDF or JPG):</label>
-                    <input type="file" id="attachment" name="attachment" class="general-input" accept=".pdf, .jpg, .jpeg" multiple>
+                    <label for="attachment" class="form-label">Attachment (PDF / JPG / PNG):</label>
+                    <input type="file" id="attachment" name="attachment[]" class="general-input" accept=".pdf, .jpg, .jpeg, .png" multiple>
                 </div>
             </div>
             <div class="row">

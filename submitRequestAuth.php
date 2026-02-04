@@ -17,16 +17,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$date, $submittedBy, $subject, $mainRequest, $status]);
 
-        $requestId = $pdo->lastInsertId();
+        $requestNo = $pdo->lastInsertId();
+        $sql = "SELECT request_no_display FROM request_list WHERE request_no = :request_no";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(['request_no' => $requestNo]);
+        $result = $stmt->fetch();
+        $requestNoDisplay = $result['request_no_display'];
 
         $fileNames = [];
-        if (!empty($_FILES['attachment']['name'][0])) {            
-            $uploadDir = 'uploads/' . $requestId . '/';
-            if (!is_dir($uploadDir)) mkdir($uploadDir, 0777, true);
+        if (!empty($_FILES['attachment']['name'][0])) {    
+            $uploadDir = 'uploads/' . $requestNoDisplay . '/';
+            if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
 
             foreach ($_FILES['attachment']['name'] as $key => $name) {
+                // Check if there was an actual upload error
+                if ($_FILES['attachment']['error'][$key] !== UPLOAD_ERR_OK) {
+                    continue; 
+                }
+
                 $tmpName = $_FILES['attachment']['tmp_name'][$key];
-                $cleanName = basename($name); 
+                $cleanName = preg_replace("/[^a-zA-Z0-9\._-]/", "_", basename($name)); 
                 $targetPath = $uploadDir . $cleanName;
 
                 if (move_uploaded_file($tmpName, $targetPath)) {
@@ -38,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (!empty($fileNames)) {
             $attachmentString = implode(',', $fileNames);
             $updateSql = "UPDATE request_list SET request_attachment = ? WHERE request_no = ?";
-            $pdo->prepare($updateSql)->execute([$attachmentString, $requestId]);
+            $pdo->prepare($updateSql)->execute([$attachmentString, $requestNo]);
         }
 
         $pdo->commit();
