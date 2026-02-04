@@ -22,6 +22,16 @@
         unset($_SESSION['timeSheet_msg']); 
     }
 
+    if (!isset($_SESSION['time_sheet_path'])) {
+        $stmt = $pdo->prepare("SELECT time_sheet FROM intern_list WHERE user_id = ?");
+        $stmt->execute([$currentId]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if ($row && !empty($row['time_sheet'])) {
+            $_SESSION['time_sheet_path'] = $row['time_sheet'];
+        }
+    }
+
     $sheetPath = $_SESSION['time_sheet_path'] ?? '';
     $dataRows = getTimeSheetRows($sheetPath);
     $tableRowsHtml = "";
