@@ -15,76 +15,20 @@
         $pdo->exec("CREATE DATABASE IF NOT EXISTS `$db` CHARACTER SET $charset COLLATE $collate");
         $pdo->exec("USE `$db`");     
         
-        createTables($pdo);
-        checkAdmin($pdo);
+        importSqlFile($pdo, 'assets/db_setup.sql');
 
      }  catch (PDOException $e) {
         die("Connection failed: ". $e->getMessage());
     }
 
-    function createTables($pdo){
-
-        $sql = "CREATE TABLE IF NOT EXISTS users (
-            user_id int(11) AUTO_INCREMENT PRIMARY KEY,
-            username varchar(50) NOT NULL,
-            password varchar(255) NOT NULL,
-            last_ping int(11) DEFAULT 0
-        )";
-
-        $pdo->exec($sql);
-
-        $sql = "CREATE TABLE IF NOT EXISTS intern_list( 
-            intern_id int(15) AUTO_INCREMENT PRIMARY KEY,
-            intern_display_id varchar(20) AS (CONCAT('ojt-', LPAD(intern_id, 3, '0'))) VIRTUAL,
-            user_id int(11) NOT NULL, 
-            date_of_employment varchar(15) NOT NULL, 
-            intern_last_name varchar(20) NOT NULL, 
-            intern_first_name varchar(30) NOT NULL, 
-            intern_middle_initial varchar(2) NOT NULL,
-            intern_course varchar(50) NOT NULL, 
-            intern_school varchar(50) NOT NULL,
-            intern_dept varchar(30) NOT NULL, 
-            total_hours_needed int(5) NOT NULL, 
-            accumulated_hours int(5) NOT NULL, 
-            remaining_hours int(5) NOT NULL,
-            school varchar(100) NOT NULL,
-            time_sheet varchar(255)
-        )";
-
-        $pdo->exec($sql);
-
-        $sql = "CREATE TABLE IF NOT EXISTS request_list( 
-            request_no int(15) AUTO_INCREMENT PRIMARY KEY, 
-            request_no_display varchar(20) AS (CONCAT('ojt-request-', LPAD(request_no, 5, '0'))) VIRTUAL, 
-            request_date varchar(15) NOT NULL,
-            submitted_by varchar(50) NOT NULL, 
-            request_subject varchar(50) NOT NULL,
-            request_main varchar(500) NOT NULL,
-            request_status varchar(20) NOT NULL,
-            request_attachment varchar(255)
-        )";
-
-        $pdo->exec($sql);
-    }
-
-    function createDbTriggers($pdo) {
-
-    }
-
-    function checkAdmin($pdo){
-        
-        $adminUser = 'admin';
-        $adminPw = '$2y$10$9aJAuuKBJURUihM0jKI/gepStTB/KZ5rAlzn9j.H/X3ReJTBhPGH.';
-
-        $checkAdminSql = "SELECT COUNT(*) FROM users WHERE username = :username";
-        $checkAdmin = $pdo->prepare($checkAdminSql);
-        $checkAdmin->execute(['username' => $adminUser]);
-                    
-        if ($checkAdmin->fetchColumn() == 0) {
-            
-            $sql = "INSERT INTO users (username, password) VALUES (:username, :password)";
-            $sql = $pdo->prepare($sql);
-            $sql->execute(['username' => $adminUser, 'password' => $adminPw]);
+    function importSqlFile($pdo, $filename) {
+       
+        if (file_exists($filename)) {
+            $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, 1);
+            $sql = file_get_contents($filename);
+            $pdo->exec($sql);
+        } else {
+            error_log("SQL file not found: " . $filename);
         }
     }
 ?>
