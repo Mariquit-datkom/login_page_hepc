@@ -24,7 +24,7 @@
             if($user['username'] !== 'admin') {
                 $redirectURL = 'internDashboard.php';
 
-                $sql = "SELECT intern_display_id FROM intern_list WHERE user_id = :user_id";
+                $sql = "SELECT * FROM intern_list WHERE user_id = :user_id";
                 $stmt = $pdo->prepare($sql);
                 $stmt->execute(['user_id' => $_SESSION['user_id']]);
                 $intern = $stmt->fetch();
@@ -32,6 +32,9 @@
                 if($intern) {
                     $intern_display_id = $intern['intern_display_id'];
                     $_SESSION['intern_display_id'] = $intern_display_id;
+
+                    $intern_first_name = $intern['intern_first_name'];
+                    $_SESSION['intern_first_name'] = $intern_first_name;
                 }
 
             }  else  $redirectURL = 'adminDashboard.php';

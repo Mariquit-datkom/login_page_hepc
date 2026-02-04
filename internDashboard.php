@@ -1,7 +1,6 @@
 <?php
     require_once 'dbConfig.php';
-    require_once 'sessionChecker.php';
- 
+    require_once 'sessionChecker.php'; 
     
     header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
     header("Cache-Control: post-check=0, pre-check=0", false);
@@ -13,6 +12,7 @@
     }
 
     $currentUser = $_SESSION['username'];
+    $intern_first_name = $_SESSION['intern_first_name'];
     $currentPage = basename($_SERVER['PHP_SELF']);
 ?>
 
@@ -63,6 +63,17 @@
             </a>
         </div>
     </nav>
+
+    <div class="main-container">
+        <div class="welcome-message-container">
+            <h2 class="welcome-message">Welcome, <?php echo htmlspecialchars($intern_first_name); ?></h2>
+        </div>
+
+        <div class="sub-container">
+            <div class="container-1"></div>
+            <div class="container-2"></div>
+        </div>
+    </div>
 
     <script src="js/dropDownMenu.js"></script>
     <script src="js/backBtnKiller.js"></script>

@@ -1,6 +1,6 @@
 <?php
     $host = "localhost";
-    $db = 'logintrial';
+    $db = 'ojt_hr_system';
     $user = 'root';
     $password = '';
     $charset = 'utf8mb4';
