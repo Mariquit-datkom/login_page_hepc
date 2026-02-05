@@ -1,17 +1,20 @@
 <?php
-    require_once 'dbConfig.php';
-    require_once 'sessionChecker.php';
-    include 'x-head.php';
+    require_once 'dbConfig.php'; //db startup
+    require_once 'sessionChecker.php'; //session heartbeat checker
+    include 'x-head.php'; //for icons
     
+    //Prevents browser to show sensitive data when back button is pressed after log out
     header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
     header("Cache-Control: post-check=0, pre-check=0", false);
     header("Pragma: no-cache");
 
+    //Checks if user reached this page through log in
     if (!isset($_SESSION['username'])){
         header("Location: loginUser.php");
         exit();
     }
 
+    //Variable declaration and settings
     $currentUser = $_SESSION['username'];
     $intern_first_name = $_SESSION['intern_first_name'];
     $intern_display_id = $_SESSION['intern_display_id'];
@@ -45,12 +48,14 @@
     <title>Dashboard</title>
 </head>
 <body>
+    <!-- Page Header -->
     <header>
         <div class="header-left">
             <img src="assets/company_logo.png" alt="company_logo" class="company-logo">
             <span class="dashboard-title"> Dashboard </span>
         </div>
 
+        <!-- User icon with drop down menu for log out -->
         <div class="header-right">
             <span class="username"> <?php echo htmlspecialchars($currentUser); ?> </span>
             <div class="user-menu-container">
@@ -63,6 +68,7 @@
         </div>
     </header>
     
+    <!-- Page Navigation Bar -->
     <nav class="nav-bar">
         <div class="nav-links">
             <a href="javascript:void(0)" class="nav-item
@@ -84,7 +90,9 @@
         </div>
     </nav>
 
+    <!-- Main Content -->
     <div class="main-container">
+        <!-- Content Header with user greeting and a live clock -->
         <div class="welcome-message-container">
             <h2 class="welcome-message">Welcome, <?php echo htmlspecialchars($intern_first_name); ?>!</h2>
 
@@ -96,6 +104,7 @@
 
         <div class="sub-container">
             <div class="left-container">
+                <!-- Account info preview -->
                 <div class="account">
                     <h2 class="container-title">Account</h2>
                     <div class="label-container">
@@ -116,6 +125,7 @@
                         </label>
                     </div>
                 </div>
+                <!-- Shows intern progress -->
                 <div class="progress-bar">
                     <h2 class="container-title">Intern Progress</h2>    
                     <div class="progress-track">
@@ -127,6 +137,7 @@
                     </div>              
                 </div>
             </div>
+            <!-- Checks and displays requests and their status submitted by the user -->
             <div class="request-status-tracker">
                 <h2 class="container-title">Request Status Tracker</h2>
                 <div class="tracker-scroll-area">
@@ -150,6 +161,7 @@
         </div>
     </div>
 
+    <!-- Backend Scripts -->
     <script src="js/dropDownMenu.js"></script>
     <script src="js/backBtnKiller.js"></script>
     <script src="js/sendHeartbeat.js"></script>
