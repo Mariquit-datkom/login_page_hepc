@@ -25,6 +25,14 @@
 
     $percentage = ($total_hours_needed > 0) ? ($accumulated_hours / $total_hours_needed) * 100 : 0;
     $percentage = min(100, max(0, $percentage));
+
+    $sql_requests = "SELECT request_date, request_subject, request_status 
+                FROM request_list 
+                WHERE submitted_by = :intern_id 
+                ORDER BY request_date DESC";
+    $stmt_req = $pdo->prepare($sql_requests);
+    $stmt_req->execute(['intern_id' => $intern_display_id]);
+    $requests = $stmt_req->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -121,6 +129,23 @@
             </div>
             <div class="request-status-tracker">
                 <h2 class="container-title">Request Status Tracker</h2>
+                <div class="tracker-scroll-area">
+                    <?php if (empty($requests)): ?>
+                        <p class="no-requests" style='padding: 20px; text-align: center; color: #666;'>No requests submitted yet.</p>
+                    <?php else: ?>
+                        <?php foreach ($requests as $req): ?>
+                            <div class="request-item">
+                                <div class="request-details">
+                                    <span class="req-subject"><?php echo htmlspecialchars($req['request_subject']); ?></span>
+                                    <span class="req-date"><?php echo date('M d, Y', strtotime($req['request_date'])); ?></span>
+                                </div>
+                                <span class="status-badge <?php echo strtolower($req['request_status']); ?>">
+                                    <?php echo htmlspecialchars($req['request_status']); ?>
+                                </span>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
     </div>
