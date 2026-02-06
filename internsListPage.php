@@ -1,15 +1,18 @@
 <?php
-    require_once 'dbConfig.php';
-    require_once 'sessionChecker.php';
+    require_once 'dbConfig.php'; // db config
+    require_once 'sessionChecker.php'; // session heartbeat checker
     
+    // Cache clear on logout
     header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
     header("Pragma: no-cache");
 
+    // Ensures user reached this page through login
     if (!isset($_SESSION['username'])){
         header("Location: loginUser.php");
         exit();
     }
 
+    // Variable declarations
     $currentUser = $_SESSION['username'];
     $currentPage = basename($_SERVER['PHP_SELF']);
 
@@ -24,12 +27,14 @@
     <title>Interns - Admin</title>
 </head>
 <body>
+    <!-- Page Header -->
     <header>
+        <!-- Company Logo and Page Title -->
         <div class="header-left">
             <img src="assets/company_logo.png" alt="company_logo" class="company-logo">
             <span class="dashboard-title"> Interns </span>
         </div>
-
+        <!-- Username and Icon -->
         <div class="header-right">
             <span class="username"> <?php echo htmlspecialchars($currentUser); ?> </span>
             <div class="user-menu-container">
@@ -41,6 +46,7 @@
         </div>
     </header>
 
+    <!-- Page Navigation Bar -->
     <nav class="admin-nav-bar">
         <div class="nav-links">
             <a href="adminDashboard.php" class="nav-item 
@@ -65,6 +71,7 @@
         </div>
     </nav>
 
+    <!-- Backend Scripts -->
     <script src="js/dropDownMenu.js"></script>
     <script src="js/backBtnKiller.js"></script>
     <script src="js/sendHeartbeat.js"></script>

@@ -1,90 +1,112 @@
 <?php
+require 'vendor/autoload.php'; 
+require_once 'dbConfig.php';
 
-    require_once 'dbConfig.php';
-    require_once 'libs/SimpleXLSX.php';
-    require_once 'libs/SimpleXLSXGen.php';
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-    use Shuchkin\SimpleXLSX;
-    use Shuchkin\SimpleXLSXGen;
+include 'generateTimeSheet.php';
 
-    include 'generateTimeSheet.php';
+if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    session_start(); // Ensure session is active
+    $user_id = $_SESSION['user_id'];
+    $date = $_POST['date'];
+    $rawIn = $_POST['clock-in'];
+    $rawOut = $_POST['clock-out'];
 
-    if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
-        $user_id = $_SESSION['user_id'];
-        $intern_display_id = $_SESSION['intern_display_id'];
-        $date = $_POST['date'];
+    $clockIn = !empty($rawIn) ? date("g:i A", strtotime($rawIn)) : '';
+    $clockOut = !empty($rawOut) ? date("g:i A", strtotime($rawOut)) : '';
 
-        $rawIn = $_POST['clock-in'];
-        $rawOut = $_POST['clock-out'];
+    $totalHoursDecimal = 0;
+    if (!empty($rawIn) && !empty($rawOut)) {
+        $diff = strtotime($rawOut) - strtotime($rawIn);
+        if ($diff < 0) $diff += 86400; 
+        $totalHoursDecimal = $diff / 3600;
+    }
 
-        $clockIn = !empty($_POST['clock-in']) ? date("g:i A", strtotime($rawIn)) : '';
-        $clockOut = !empty($_POST['clock-out']) ? date("g:i A", strtotime($rawOut)) : '';
+    $fileToRead = file_exists($_SESSION['time_sheet_path']) ? $_SESSION['time_sheet_path'] : $_SESSION['time_sheet_template'];
 
-        $totalHours = "";
-        $totalHoursDecimal = 0;
-        if (!empty($rawIn) && !empty($rawOut)) {
-            $time1 = strtotime($rawIn);
-            $time2 = strtotime($rawOut);
-            
-            $diff = $time2 - $time1;
+    try {
+        $spreadsheet = IOFactory::load($fileToRead);
+        $sheet = $spreadsheet->getActiveSheet();
+        
+        $allData = $sheet->toArray();
+        
+        $newRow = [$date, $clockIn, $clockOut, $totalHoursDecimal];
 
-            if ($diff < 0) {
-                $diff += 86400; 
+        $headers = array_slice($allData, 0, 3);
+        $dataRows = array_slice($allData, 3);
+        
+        $dataRows[] = $newRow;
+        
+        $dataRows = array_filter($dataRows, function($row) {
+            return !empty($row[0]);
+        });
+
+        usort($dataRows, function($a, $b) {
+            return strtotime($a[0]) <=> strtotime($b[0]);
+        });
+
+        $sheet->removeRow(4, $sheet->getHighestRow()); 
+
+        $sheet->fromArray($dataRows, NULL, 'A4');
+
+        $newTotalAccumulated = 0;
+        $allData = $sheet->toArray();
+        foreach ($allData as $index => $row) {
+            if (isset($row[3]) && is_numeric($row[3])) {
+                $newTotalAccumulated += (float)$row[3];
             }
-
-            $hours = floor($diff / 3600);
-            $minutes = floor(($diff % 3600) / 60);
-
-            $totalHours = ($minutes > 0) ? "{$hours} hours {$minutes} minutes" : "{$hours} hours";
-            $totalHoursDecimal = $diff / 3600;
         }
 
-        $fileToRead = file_exists($_SESSION['time_sheet_path']) ? $_SESSION['time_sheet_path'] : $_SESSION['time_sheet_template'];
+        $lastRow = $sheet->getHighestRow();
+        $fullRange = 'A1:D' . $lastRow;
 
-        if ($xlsx = SimpleXLSX::parse($fileToRead)) {
-            $data = $xlsx->rows();
+        // Apply Center + Borders to the whole used range
+        $sheet->getStyle($fullRange)->applyFromArray([
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+            ],
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                ],
+            ],
+        ]);
 
-            $data[] = [$date, $clockIn, $clockOut, $totalHoursDecimal];
+        // Apply AutoFit to Columns
+        foreach (range('A', 'D') as $col) {
+            $sheet->getColumnDimension($col)->setAutoSize(true);
+        }
 
-            $headers = array_shift($data); 
-            usort($data, function($a, $b) {
-                return strtotime($a[0]) <=> strtotime($b[0]);
-            });
-            array_unshift($data, $headers);
+        // Save the file
+        $writer = new Xlsx($spreadsheet);
+        $writer->save($_SESSION['time_sheet_path']);
 
-            $newTotalAccumulated = 0;
-            foreach ($data as $index => $row) {
-                if ($index === 0) continue;                 
-                if (isset($row[3]) && is_numeric($row[3])) {
-                    $newTotalAccumulated += (float)$row[3];
-                }
-            }
-
-            $newXLSX = SimpleXLSXGen::fromArray($data)->saveAs($_SESSION['time_sheet_path']);
-        }  
-
+        // Update Database
         $total_hours_needed = $_SESSION['total_hours_needed'];
-        $accumulated_hours = $newTotalAccumulated;
-        $remaining_hours = $total_hours_needed - $accumulated_hours;
+        $remaining_hours = $total_hours_needed - $newTotalAccumulated;
 
-        $_SESSION['accumulated_hours'] = $accumulated_hours;
+        $_SESSION['accumulated_hours'] = $newTotalAccumulated;
         $_SESSION['remaining_hours'] = $remaining_hours;
 
-        $sql = "UPDATE intern_list SET time_sheet = :time_sheet, accumulated_hours = :accumulated_hours, remaining_hours = :remaining_hours
-        WHERE user_id = :user_id";
+        $sql = "UPDATE intern_list SET time_sheet = :time_sheet, accumulated_hours = :acc, remaining_hours = :rem WHERE user_id = :user_id";
         $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':time_sheet', $_SESSION['time_sheet_path']);
-        $stmt->bindParam(':accumulated_hours', $accumulated_hours);
-        $stmt->bindParam(':remaining_hours', $remaining_hours);
-        $stmt->bindParam(':user_id', $user_id);
-        
-        if ($stmt->execute()) {
-            $_SESSION['timeSheet_msg'] = "<p style='color: green;'>Entry collected successfully!</p>";
-        } else {
-            $_SESSION['timeSheet_msg'] = "<p style='color: red;'>Error saving time sheet entry.</p>";
-        }
+        $stmt->execute([
+            ':time_sheet' => $_SESSION['time_sheet_path'],
+            ':acc' => $newTotalAccumulated,
+            ':rem' => $remaining_hours,
+            ':user_id' => $user_id
+        ]);
 
-        header("Location: timeSheet.php");
-        exit();
+        $_SESSION['timeSheet_msg'] = "<p style='color: green;'>Entry collected successfully!</p>";
+
+    } catch (Exception $e) {
+        $_SESSION['timeSheet_msg'] = "<p style='color: red;'>Error: " . $e->getMessage() . "</p>";
     }
-?>
+
+    header("Location: timeSheet.php");
+    exit();
+}

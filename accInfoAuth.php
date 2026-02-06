@@ -1,8 +1,9 @@
 <?php
 
-    require_once 'dbConfig.php';
-    session_start();
+    require_once 'dbConfig.php'; //db connection
+    session_start(); //Session fetch
 
+    //Form submit authentication for database saving
     if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $user_id = $_SESSION['user_id'];
@@ -32,6 +33,7 @@
         $stmt->bindParam(':school', $school);
         $stmt->bindParam(':user_id', $user_id);
 
+        //If sql is successfuly executed, compute for total hours needed, accumulated, and remaining hours
         if ($stmt->execute()) {
             $_SESSION['total_hours_needed'] = $totalHoursNeeded;
 

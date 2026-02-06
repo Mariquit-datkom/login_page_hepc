@@ -1,17 +1,20 @@
 <?php
-    require_once 'dbConfig.php';
-    require_once 'sessionChecker.php';
-    include 'x-head.php';
+    require_once 'dbConfig.php'; //Database connection
+    require_once 'sessionChecker.php'; //session heartbeat checker 
+    include 'x-head.php'; //icons
     
+    //Prevents browser to show sensitive data when back button is pressed after log out
     header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
     header("Cache-Control: post-check=0, pre-check=0", false);
     header("Pragma: no-cache");
 
+    //Checks if user reached this page through log in
     if (!isset($_SESSION['username'])){
         header("Location: loginUser.php");
         exit();
     }
 
+    //Variable declaration and settings
     $currentUser = $_SESSION['username'];
     $currentId = $_SESSION['user_id'];
 
@@ -35,6 +38,7 @@
 
     $currentPage = basename($_SERVER['PHP_SELF']);
 
+    //Form submit confirmation message
     $confirmationMessage = "";
     if (isset($_SESSION['accinfo_msg'])) {
         $confirmationMessage = $_SESSION['accinfo_msg'];
@@ -52,6 +56,7 @@
     <title>Account Info</title>
 </head>
 <body>
+    <!-- Page Header -->
     <header>
         <div class="header-left">
             <img src="assets/company_logo.png" alt="company_logo" class="company-logo">
@@ -70,6 +75,7 @@
         </div>
     </header>
     
+    <!-- Navigation Bar -->
     <nav class="nav-bar">
         <div class="nav-links">
             <a href="internDashboard.php" class="nav-item
@@ -91,53 +97,55 @@
         </div>
     </nav>
 
+    <!-- Account info parent container -->
     <div class="acc-info-container">
         <div class="form-title-container">
             <h2 class="form-title">Profile Summary</h2>
             <?php echo $confirmationMessage ?>
         </div>
+        <!-- Main form for account info saving or update -->
         <form action="accInfoAuth.php" method="POST" autocomplete="off">
             <div class="row">
-                <div class="form-group">
+                <div class="form-group"><!-- Last Name -->                    
                     <label for="last-name" class="form-label">Last Name: </label>
                     <input type="text" name="last-name" id="last-name" class="general-input" placeholder="Enter last name" required="required"
                     value="<?php echo htmlspecialchars($internData['intern_last_name']); ?>">                    
                 </div>
-                <div class="form-group">
+                <div class="form-group"><!-- First Name -->
                     <label for="first-name" class="form-label">First Name: </label>
                     <input type="text" name="first-name" id="first-name" class="general-input" placeholder="Enter first name" required="required"
                     value="<?php echo htmlspecialchars($internData['intern_first_name']); ?>">
                 </div>
-                <div class="form-group">
+                <div class="form-group"><!-- Middle Initial -->
                     <label for="middle-initial" class="form-label">Middle Initial: </label>
                     <input type="text" name="middle-initial" id="middle-initial" class="general-input middle-initial" placeholder="Enter middle initial" required="required"
                     value="<?php echo htmlspecialchars($internData['intern_middle_initial']); ?>">
                 </div>
             </div>
             <div class="row">
-                <div class="form-group">
+                <div class="form-group"><!-- Employment Date -->
                     <label for="employment-date" class="form-label">Employment Date: </label>
                     <input type="date" name="employment-date" id="employment-date" class="general-input employment-date" required="required"
                     value="<?php echo htmlspecialchars($internData['date_of_employment']); ?>">
                 </div>
-                <div class="form-group">
+                <div class="form-group"><!-- Course / Program -->
                     <label for="course" class="form-label">Course: </label>
                     <input type="text" name="course" id="course" class="general-input" placeholder="Enter course (e.g. BS Computer Science)" required="required"
                     value="<?php echo htmlspecialchars($internData['intern_course']); ?>">
                 </div>
-                <div class="form-group">
+                <div class="form-group"><!-- Division / Section Assigned To -->
                     <label for="division-or-section" class="form-label">Division / Section: </label>
                     <input type="text" name="division-or-section" id="division-or-section" class="general-input" placeholder="Enter division or section" required="required"
                     value="<?php echo htmlspecialchars($internData['intern_dept']); ?>">
                 </div>
             </div>
             <div class="row">
-                <div class="form-group">
+                <div class="form-group"><!-- Total Hours Required By The School -->
                     <label for="total-hours-needed" class="form-label">Total Hours Needed: </label>
                     <input type="text" name="total-hours-needed" id="total-hours-needed" class="general-input hours-input" placeholder="Enter total hours needed" required="required"
                     value="<?php echo htmlspecialchars($internData['total_hours_needed']); ?>">
                 </div>
-                <div class="form-group">
+                <div class="form-group"><!-- School / University -->
                     <label for="school" class="form-label">School: </label>
                     <input type="text" name="school" id="school" class="general-input school-input" placeholder="Enter school" required="required"
                     value="<?php echo htmlspecialchars($internData['school']); ?>">
@@ -149,6 +157,7 @@
         </form>
     </div>
 
+    <!-- Scripts -->
     <script src="js/dropDownMenu.js"></script>
     <script src="js/backBtnKiller.js"></script>
     <script src="js/sendHeartbeat.js"></script>

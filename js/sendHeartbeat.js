@@ -1,3 +1,4 @@
+//Session heartbeat to prevent unnecessary forced log out
 async function sendHeartbeat() {
     try {
         const response = await fetch('heartbeat.php', { 

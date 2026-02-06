@@ -1,5 +1,5 @@
 <?php
-    require_once 'dbConfig.php'; //db startup
+    require_once 'dbConfig.php'; //db connection
     require_once 'sessionChecker.php'; //session heartbeat checker
     include 'x-head.php'; //for icons
     
@@ -95,7 +95,7 @@
         <!-- Content Header with user greeting and a live clock -->
         <div class="welcome-message-container">
             <h2 class="welcome-message">Welcome, <?php echo htmlspecialchars($intern_first_name); ?>!</h2>
-
+            <!-- Live Clock -->
             <div class="live-clock-container">
                 <div id="current-date"></div>
                 <div id="current-time"></div>
@@ -108,29 +108,36 @@
                 <div class="account">
                     <h2 class="container-title">Account</h2>
                     <div class="label-container">
+                        <!-- Intern Display Id -->
                         <label for="intern-display-id" class="acc-labels"><span style="font-weight: bold">Intern ID: </span>
                             <?php echo htmlspecialchars($intern_display_id)?>
                         </label>
+                        <!-- Employment Date -->
                         <label for="date_started" class="acc-labels"><span style="font-weight: bold">Date started: </span>
                             <?php echo htmlspecialchars($date_started)?>
                         </label>
-                        <label for="accumulated-hours" class="acc-labels"><span style="font-weight: bold">Department/Section: </span>
+                        <!-- Intern Display Id -->
+                        <label for="intern-department" class="acc-labels"><span style="font-weight: bold">Department/Section: </span>
                             <?php echo htmlspecialchars($intern_dept)?>
                         </label>
-                        <label for="remaining-hours" class="acc-labels"><span style="font-weight: bold">Course: </span>
+                        <!-- Intern Course / Program -->
+                        <label for="intern-course" class="acc-labels"><span style="font-weight: bold">Course: </span>
                             <?php echo htmlspecialchars($intern_course)?>
                         </label>
-                        <label for="total_hours_needed" class="acc-labels"><span style="font-weight: bold">School: </span>
+                        <!-- School / University -->
+                        <label for="intern-school" class="acc-labels"><span style="font-weight: bold">School: </span>
                             <?php echo htmlspecialchars($school)?>
                         </label>
                     </div>
                 </div>
                 <!-- Shows intern progress -->
                 <div class="progress-bar">
-                    <h2 class="container-title">Intern Progress</h2>    
+                    <h2 class="container-title">Intern Progress</h2>   
+                    <!-- Progress Bar --> 
                     <div class="progress-track">
                         <div class="progress-fill" style="width: <?php echo $percentage; ?>%;"></div>
                     </div>  
+                    <!-- Progress Info (Accumulated hours & Total Hours Needed) -->
                     <div class="progress-info">
                         <span><?php echo number_format($percentage, 1); ?>% Completed</span>
                         <span><?php echo htmlspecialchars($accumulated_hours); ?> / <?php echo htmlspecialchars($total_hours_needed); ?> hrs</span>
@@ -140,11 +147,13 @@
             <!-- Checks and displays requests and their status submitted by the user -->
             <div class="request-status-tracker">
                 <h2 class="container-title">Request Status Tracker</h2>
+                <!-- Request Entry Container -->
                 <div class="tracker-scroll-area">
                     <?php if (empty($requests)): ?>
                         <p class="no-requests" style='padding: 20px; text-align: center; color: #666;'>No requests submitted yet.</p>
                     <?php else: ?>
                         <?php foreach ($requests as $req): ?>
+                            <!-- Request Entry -->
                             <div class="request-item">
                                 <div class="request-details">
                                     <span class="req-subject"><?php echo htmlspecialchars($req['request_subject']); ?></span>

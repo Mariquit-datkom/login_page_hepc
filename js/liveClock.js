@@ -1,3 +1,4 @@
+//Live clock for dashboard
 function updateClock() {
     const now = new Date();
 

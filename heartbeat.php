@@ -1,7 +1,8 @@
 <?php
-session_start();
-require_once 'dbConfig.php';
+require_once 'dbConfig.php'; //db connection
+session_start(); // session fetch
 
+//Updates heartbeat / ping to database
 if (isset($_SESSION['username'])) {
     $uid = $_SESSION['username'];
     $now = time();

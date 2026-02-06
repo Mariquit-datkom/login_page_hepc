@@ -1,18 +1,21 @@
 <?php
-    require_once 'dbConfig.php';
-    require_once 'sessionChecker.php';
-    include 'fetchTimeSheetData.php';
-    include 'x-head.php';
+    require_once 'dbConfig.php'; // db config
+    require_once 'sessionChecker.php'; // session heartbeat checker
+    include 'fetchTimeSheetData.php'; // fetches existing time sheet data
+    include 'x-head.php'; // icons
 
+    // Cache clear to prevent unauthorized access after log out
     header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
     header("Cache-Control: post-check=0, pre-check=0", false);
     header("Pragma: no-cache");
 
+    // Ensures current user reaches this page through log in
     if (!isset($_SESSION['username'])){
         header("Location: loginUser.php");
         exit();
     }
 
+    // Variable Declarations
     $currentUser = $_SESSION['username'];
     $currentId = $_SESSION['user_id'];
     $currentPage = basename($_SERVER['PHP_SELF']);
@@ -33,6 +36,7 @@
         }
     }
 
+    // Generate Time Sheet Rows
     $sheetPath = $_SESSION['time_sheet_path'] ?? '';
     $dataRows = getTimeSheetRows($sheetPath);
     $tableRowsHtml = "";
@@ -76,12 +80,14 @@
     <title>Time Sheet</title>
 </head>
 <body>
+    <!-- Page Header -->
     <header>
+        <!-- Company logo and page title --> 
         <div class="header-left">
             <img src="assets/company_logo.png" alt="company_logo" class="company-logo">
             <span class="dashboard-title"> Intern Time Sheet </span>
         </div>
-
+        <!-- Username and icon -->
         <div class="header-right">
             <span class="username"> <?php echo htmlspecialchars($currentUser); ?> </span>
             <div class="user-menu-container">
@@ -93,7 +99,7 @@
             </div>
         </div>
     </header>
-    
+    <!-- Page Navigation Bar -->
     <nav class="nav-bar">
         <div class="nav-links">
             <a href="internDashboard.php" class="nav-item
@@ -114,22 +120,22 @@
             </a>
         </div>
     </nav>
-
+    <!-- Time Sheet Input Parent Container -->
     <div class="time-sheet-input-container">
         <div class="form-title-container form-title-time-sheet-input">
             <h2 class="form-title">Time Sheet Input</h2>
         </div>
         <form action="timeSheetAuth.php" method="POST" autocomplete="off">
             <div class="row">
-                <div class="form-group">
+                <div class="form-group"> <!-- Date Input -->
                     <label for="date" class="form-label">Date:</label>
                     <input type="date" id="date" name="date" class="general-input">
                 </div>
-                <div class="form-group">
+                <div class="form-group"> <!-- Clock In Input -->
                     <label for="clockIn" class="form-label">Clock In:</label>
                     <input type="time" id="clock-in" name="clock-in" class="general-input">
                 </div>
-                <div class="form-group">
+                <div class="form-group"> <!-- Clock Out Input -->
                     <label for="clockOut" class="form-label">Clock Out:</label>
                     <input type="time" id="clock-out" name="clock-out" class="general-input">
                 </div>
@@ -141,13 +147,13 @@
         </form>
         </div>
     </div>
-
+    <!-- Time Sheet Display Container --> 
     <div class="time-sheet-display-container">
         <div class="form-title-container">
             <h2 class="form-title">Time Sheet Summary</h2>
         </div>
         <div class="time-sheet-table">
-            <div class="table-headers">
+            <div class="table-headers">  <!-- Table Headers -->
                 <div class="table-header-container">
                     <span class="table-header">Date</span>
                 </div>
@@ -161,11 +167,12 @@
                     <span class="table-header">Total Hours</span>
                 </div>
             </div>
-
+            <!-- Time Entry Generation --> 
             <?php echo $tableRowsHtml; ?>
         </div>
     </div>
 
+    <!-- Script -->
     <script src="js/dropDownMenu.js"></script>
     <script src="js/backBtnKiller.js"></script>
     <script src="js/sendHeartbeat.js"></script>

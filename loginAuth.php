@@ -1,8 +1,9 @@
 <?php
 
-    require_once 'dbConfig.php';
-    session_start();
+    require_once 'dbConfig.php'; // db config
+    session_start(); // session fetch
 
+    // Form Submission Authentication
     if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
         $username = $_POST['username'];
         $password = $_POST['password'];
@@ -12,6 +13,7 @@
         $stmt->execute(['username' => $username]);
         $user = $stmt->fetch();
 
+        // Checks if password is correct
         if ($user && password_verify($password, $user['password'])) {
 
             $_SESSION['username'] = $user['username'];
@@ -21,6 +23,7 @@
             $update = $pdo->prepare("UPDATE users SET last_ping = ? WHERE username = ?");
             $update->execute([$now, $username]);
 
+            // If user is an intern
             if($user['username'] !== 'admin') {
                 $redirectURL = 'internDashboard.php';
 
@@ -29,6 +32,7 @@
                 $stmt->execute(['user_id' => $_SESSION['user_id']]);
                 $intern = $stmt->fetch();
 
+                // Fetches user data if sql query is exeuted successfuly
                 if($intern) {
                     $intern_first_name = $intern['intern_first_name'];
                     $_SESSION['intern_first_name'] = $intern_first_name;
@@ -56,8 +60,11 @@
                     
                 }
 
-            }  else  $redirectURL = 'adminDashboard.php';
+            }  else { //If user is an admin
+                $redirectURL = 'adminDashboard.php';
+            }
 
+            //Redirect to respective dashboard
             header("Location: $redirectURL");
             exit();
             

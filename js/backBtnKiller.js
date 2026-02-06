@@ -1,3 +1,4 @@
+//Prevents redisplay of data on back button click
 window.addEventListener('pageshow', function (event) {
     const historyTraversal = event.persisted || 
         (typeof window.performance != "undefined" && 

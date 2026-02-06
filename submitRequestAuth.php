@@ -1,7 +1,8 @@
 <?php
-require_once 'dbConfig.php';
-require_once 'sessionChecker.php';
+require_once 'dbConfig.php'; // db connection
+require_once 'sessionChecker.php'; // session heartbeat checker
 
+// Form Submission Authentication
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $subject = $_POST['request-subject'];
     $date = $_POST['date'];
@@ -10,13 +11,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $status = "Pending";
 
     try {
-        $pdo->beginTransaction();
+        $pdo->beginTransaction(); //Doesn't save any changes permanently yet
 
+        // Inserts form data into database table
         $sql = "INSERT INTO request_list (request_date, submitted_by, request_subject, request_main, request_status) 
                 VALUES (?, ?, ?, ?, ?)";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$date, $submittedBy, $subject, $mainRequest, $status]);
 
+        // Fetches formatted request number for dashboard display
         $requestNo = $pdo->lastInsertId();
         $sql = "SELECT request_no_display FROM request_list WHERE request_no = :request_no";
         $stmt = $pdo->prepare($sql);
@@ -24,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $result = $stmt->fetch();
         $requestNoDisplay = $result['request_no_display'];
 
+        // Processes uploaded attachments to save into uploads folder
         $fileNames = [];
         if (!empty($_FILES['attachment']['name'][0])) {    
             $uploadDir = 'uploads/' . $requestNoDisplay . '/';
@@ -44,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
             }
         }
-
+        // Adds request entry folder path to database
         if (!empty($fileNames)) {
             $attachmentString = implode(',', $fileNames);
             $updateSql = "UPDATE request_list SET request_attachment = ? WHERE request_no = ?";

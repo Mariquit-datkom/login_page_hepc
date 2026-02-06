@@ -1,4 +1,5 @@
 <?php
+    //Variable declarations for database connection
     $host = "localhost";
     $db = 'ojt_hr_system';
     $user = 'root';
@@ -8,6 +9,7 @@
 
     $dsn = "mysql:host=$host;charset=$charset";
 
+    //Creation of database and tables if it doesn't exists
     try {
         $pdo = new PDO($dsn, $user, $password);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
