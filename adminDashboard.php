@@ -57,7 +57,7 @@
 
             <a href="internsListPage.php" class="nav-item 
             <?php echo ($currentPage === 'internsListPage.php') ? 'active' : ''; ?>" 
-            data-text="Interns List"><i class="fa fa-clipboard"></i>Interns List
+            data-text="Interns List"><i class="fa fa-clipboard-list"></i>Interns List
             </a>
 
             <a href="requestsPage.php" class="nav-item
