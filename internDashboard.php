@@ -32,7 +32,7 @@
     $sql_requests = "SELECT request_date, request_subject, request_status, request_main 
                 FROM request_list 
                 WHERE submitted_by = :intern_id 
-                ORDER BY request_date DESC";
+                ORDER BY FIELD(request_status, 'Pending', 'Approved', 'Declined') ASC, request_date DESC";
     $stmt_req = $pdo->prepare($sql_requests);
     $stmt_req->execute(['intern_id' => $intern_display_id]);
     $requests = $stmt_req->fetchAll(PDO::FETCH_ASSOC);

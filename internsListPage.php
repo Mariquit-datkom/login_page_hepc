@@ -43,7 +43,7 @@
      <?php include 'adminHeaderAndNav.php'; ?>
 
      <!-- Interns List Table -->
-      <div class="list-table-container">
+    <div class="list-table-container">
         <h2 class="container-title">List of Current Interns</h2>
         <div class="list-table"></div>
             <?php if (empty($interns)): ?>
