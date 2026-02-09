@@ -4,7 +4,12 @@ function showInternDetails(intern) {
     const modalName = document.getElementById('modal-name');
 
     // Set the Title
-    modalName.innerText = intern.intern_first_name + " " + intern.intern_last_name;
+    let displayName = `${intern.intern_last_name}, ${intern.intern_first_name}`;
+    if (intern.intern_middle_initial && intern.intern_middle_initial.trim() !== "") {
+        displayName += ` ${intern.intern_middle_initial.trim()}.`;
+    }
+
+    modalName.innerText = displayName;
 
     // Inject the Details based on your database columns
     modalBody.innerHTML = `

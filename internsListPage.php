@@ -13,18 +13,20 @@
         exit();
     }
 
-    // Variable declarations
-    $currentUser = $_SESSION['username'];
-    $currentPage = basename($_SERVER['PHP_SELF']);
-
+    // Intern Details
     try {
         $stmt = $pdo->prepare("SELECT * FROM intern_list ORDER BY intern_last_name ASC");
         $stmt->execute();
         $interns = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
-        $interns = []; // Initialize as empty array to avoid errors in the HTML
+        $interns = [];
     }
+
+    // Variable declarations
+    $currentUser = $_SESSION['username'];
+    $currentPage = basename($_SERVER['PHP_SELF']);
 ?>
 
 <!DOCTYPE html>
@@ -54,7 +56,10 @@
                         <!-- Intern Summary -->
                         <div class="intern-details">
                             <span><strong>ID:</strong> <?php echo htmlspecialchars($ojt['intern_display_id']); ?></span>
-                            <span><strong>Name:</strong> <?php echo htmlspecialchars($ojt['intern_first_name'] . " " . $ojt['intern_last_name']); ?></span>
+                            <span><strong>Name:</strong> <?php 
+                            $fullName = htmlspecialchars($ojt['intern_last_name'] . ", " . $ojt['intern_first_name']);                            
+                            if (!empty(trim($ojt['intern_middle_initial']))) $fullName .= " " . htmlspecialchars($ojt['intern_middle_initial'] . ".");
+                            echo $fullName; ?></span>
                             <span><strong>Hours:</strong> <?php echo htmlspecialchars($ojt['accumulated_hours']); ?> / <?php echo htmlspecialchars($ojt['total_hours_needed']); ?></span>
                         </div>
                     </div>
