@@ -29,48 +29,8 @@
     <title>Dashboard - Admin</title>
 </head>
 <body>
-    <!-- Page Header -->
-    <header>
-        <div class="header-left">
-            <img src="assets/company_logo.png" alt="company_logo" class="company-logo">
-            <span class="dashboard-title"> Admin Dashboard </span>
-        </div>
-
-        <div class="header-right">
-            <span class="username"> <?php echo htmlspecialchars($currentUser); ?> </span>
-            <div class="user-menu-container">
-                <img src="assets/user_avatar.png" alt="user_avatar" class="user-avatar" id="user-avatar-btn">
-                <div class="dropdown-content" id="user-avatar-dropdown">
-                    <a href="logout.php">Logout</a>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Page Navigation Bar -->
-    <nav class="nav-bar">
-        <div class="nav-links">
-            <a href="javascript:void(0)" class="nav-item 
-            <?php echo ($currentPage === 'adminDashboard.php') ? 'active' : ''; ?>" 
-            data-text="Dashboard"><i class = "fa fa-home"></i>Dashboard
-            </a>
-
-            <a href="internsListPage.php" class="nav-item 
-            <?php echo ($currentPage === 'internsListPage.php') ? 'active' : ''; ?>" 
-            data-text="Interns List"><i class="fa fa-clipboard-list"></i>Interns List
-            </a>
-
-            <a href="requestsPage.php" class="nav-item
-            <?php echo ($currentPage === 'requestsPage.php') ? 'active' : ''; ?>" 
-            data-text="Requests"><i class="fa fa-question"></i>Requests
-            </a>
-
-            <a href="registerIntern.php" class="nav-item 
-            <?php echo ($currentPage === 'registerIntern.php') ? 'active' : ''; ?>" 
-            data-text="Register Intern"><i class="fa fa-pencil"></i>Register Intern
-            </a>
-        </div>
-    </nav>
+    <!-- Generate Page Header and Nav Bar -->
+     <?php include 'adminHeaderAndNav.php'; ?>
 
      <!-- Main Content -->
     <div class="main-container">

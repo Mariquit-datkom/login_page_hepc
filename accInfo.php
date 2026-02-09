@@ -56,46 +56,8 @@
     <title>Account Info</title>
 </head>
 <body>
-    <!-- Page Header -->
-    <header>
-        <div class="header-left">
-            <img src="assets/company_logo.png" alt="company_logo" class="company-logo">
-            <span class="dashboard-title"> Account Information </span>
-        </div>
-
-        <div class="header-right">
-            <span class="username"> <?php echo htmlspecialchars($currentUser); ?> </span>
-            <div class="user-menu-container">
-                <img src="assets/user_avatar.png" alt="user_avatar" class="user-avatar" id="user-avatar-btn">
-                <div class="dropdown-content" id="user-avatar-dropdown">
-                    <span class="mobile-username"><?php echo htmlspecialchars($currentUser); ?></span>
-                    <a href="logout.php">Logout</a>
-                </div>
-            </div>
-        </div>
-    </header>
-    
-    <!-- Navigation Bar -->
-    <nav class="nav-bar">
-        <div class="nav-links">
-            <a href="internDashboard.php" class="nav-item
-            <?php echo ($currentPage === 'internDashboard.php') ? 'active' : ''; ?>"
-            data-text="Dashboard"><i class = "fa fa-home"></i>Dashboard
-            </a>
-            <a href="javascript:void(0)" class="nav-item
-            <?php echo ($currentPage === 'accInfo.php') ? 'active' : ''; ?>"
-            data-text="Account Info"><i class = "fa fa-user"></i>Account Info
-            </a>
-            <a href="timeSheet.php" class="nav-item
-            <?php echo ($currentPage === 'timeSheet.php') ? 'active' : ''; ?>"
-            data-text="Time Sheet"><i class = "fas fa-calendar-alt"></i>Time Sheet
-            </a>
-            <a href="submitRequest.php" class="nav-item
-            <?php echo ($currentPage === 'submitRequest.php') ? 'active' : ''; ?>"
-            data-text="Submit Request"><i class = "fa fa-paperclip"></i>Submit Request
-            </a>
-        </div>
-    </nav>
+    <!-- Generate Page Header -->
+    <?php include 'internHeaderAndNav.php'; ?>
 
     <!-- Account info parent container -->
     <div class="acc-info-container">
