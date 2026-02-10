@@ -95,12 +95,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const searchTerm = searchField.value.toLowerCase();
         const entriesPerPage = entriesSelect.value === 'all' ? requestItems.length : parseInt(entriesSelect.value);
 
-        // 1. Filter items first based on search
+        // Filter items first based on search
         const filteredItems = requestItems.filter(item => {
             return item.innerText.toLowerCase().includes(searchTerm);
         });
 
-        // 2. Calculate pagination
+        // Calculate pagination
         const totalPages = Math.ceil(filteredItems.length / entriesPerPage) || 1;
         
         // Reset to page 1 if current page is out of bounds (happens on new search)
@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const startIndex = (currentPage - 1) * entriesPerPage;
         const endIndex = startIndex + entriesPerPage;
 
-        // 3. Show/Hide items
+        // Show/Hide items
         requestItems.forEach(item => item.style.display = 'none'); // Hide all first
         
         filteredItems.forEach((item, index) => {
@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        // 4. Update UI Controls
+        // Update UI Controls
         pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
         prevBtn.disabled = (currentPage === 1);
         nextBtn.disabled = (currentPage === totalPages);
