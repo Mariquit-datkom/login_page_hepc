@@ -118,7 +118,7 @@
                     <div id="modalAttachment"></div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn-accept" onclick="updateRequestStatus('Approved')">Accept</button>
+                    <button class="btn-accept" onclick="updateRequestStatus('Approved')">Approve</button>
                     <button class="btn-decline" onclick="updateRequestStatus('Declined')">Decline</button>
                 </div>
             </div>
