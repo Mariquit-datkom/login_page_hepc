@@ -45,6 +45,22 @@
      <!-- Interns List Table -->
     <div class="list-table-container">
         <h2 class="container-title">List of Current Interns</h2>
+        <div class="search-row">
+            <div class="sort-entries">
+                <label>Show </label>
+                <select name="entries-select" id="entries-select">
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                    <option value="all">All</option>
+                </select>
+                <label> entries</label>
+            </div>
+            <div class="search-bar">
+                <input type="text" class="search-field" id="search-field" placeholder="Search..">
+                <button type="submit" class="search-btn"><i class="fas fa-search"></i></button>
+            </div>
+        </div>
         <div class="list-table"></div>
             <?php if (empty($interns)): ?>
                 <p class="no-interns" style='padding: 20px; text-align: center; color: #666;'>No interns / trainees registered yet.</p>

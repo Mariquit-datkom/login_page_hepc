@@ -13,17 +13,108 @@
 }
 
 .container-title {
-    text-align: center;
+    text-align: start;
     padding-bottom: 10px;
     border-bottom: #333 1px solid;
+    margin: 0;
+    margin-top: 15px;
+}
+
+.search-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0 15px 0;
+}
+
+.sort-entries {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 17px;
+    color: #333;
+}
+
+#entries-select {    
+    height: 27px; 
+    border: #ccc 0.5px solid;
+    border-radius: 13px;
+    padding: 0 10px;
+    background-color: #fff;
+    cursor: pointer;
+    font-size: 13px;
+    color: #333;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+#entries-select:focus {
+    border-color: #999;
+}
+
+.search-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: stretch;
+    border: #ccc 0.5px solid;
+    border-radius: 13px;
+    overflow: hidden;
+}
+
+.search-field {
+    width: 200px;
+    height: 25px;
+    border: none;
+    padding-left: 8px;
+}
+
+.search-field:focus {        
+    outline: 0;
+}
+
+.search-btn {
+    cursor: pointer;
+    background-color: #f6f6f6;
+    border: none;
+    border-left: #ccc 0.5px solid;
+    font-size: 13px;
+}
+
+.list-table {
+    max-height: 320px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;;
+    padding-right: 10px;
+    gap: 20px;
+}
+
+.list-table::-webkit-scrollbar {
+    width: 6px;
+}
+
+.list-table::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.list-table::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+}
+
+.list-table::-webkit-scrollbar-thumb:hover {
+    background: #999;
 }
 
 .request-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
     border: 1px solid #ddd; 
-    margin: 15px 0; 
     padding: 15px; 
     cursor: pointer;
     border-radius: 8px;
@@ -190,5 +281,9 @@
 .close-btn:hover { color: #333; }
 
 @media (max-width: 500px) {
+    .search-field { width: 120px }
+
+    .list-table { height: 280px }
+
     .modal-content { width: 85% }
 }

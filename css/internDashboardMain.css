@@ -146,7 +146,7 @@
 }
 
 .tracker-scroll-area::-webkit-scrollbar-thumb:hover {
-    background: #32749a;
+    background: #999;
 }
 
 .request-item {
