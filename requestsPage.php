@@ -56,10 +56,10 @@
             <div class="sort-entries">
                 <label>Show </label>
                 <select name="entries-select" id="entries-select">
+                    <option value="all">All</option>
                     <option value="10">10</option>
                     <option value="20">20</option>
                     <option value="50">50</option>
-                    <option value="all">All</option>
                 </select>
                 <label> entries</label>
             </div>
@@ -82,6 +82,8 @@
                 ?>
                 
                 <div class="request-item clickable-request" 
+                    data-subject="<?php echo strtolower(htmlspecialchars($reqs['request_subject'])); ?>"
+                    data-name="<?php echo strtolower($fullName); ?>"
                     onclick="showRequestDetails(<?php echo htmlspecialchars(json_encode($reqs)); ?>, '<?php echo addslashes($fullName); ?>')">
                     <div class="request-details">
                         <span class="req-subject"> <?php echo htmlspecialchars($reqs['request_subject']); ?> - <?php echo $fullName; ?></span>
@@ -93,7 +95,13 @@
                 </div>
                 <?php endforeach; ?>
             <?php endif; ?>
-      </div>
+        </div>
+        <div class="pagination-controls">
+            <button id="prevBtn" class="pag-btn"><i class="fas fa-chevron-left"></i> Previous</button>
+            <span id="pageInfo">Page 1</span>
+            <button id="nextBtn" class="pag-btn">Next <i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
 
       <!-- Request Pop Up -->
     <div id="requestModal" class="modal">

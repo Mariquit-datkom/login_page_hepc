@@ -1,6 +1,6 @@
-* {
-    box-sizing: border-box;
-}
+* { box-sizing: border-box; }
+
+body { overflow: hidden; }
 
 .requests-table-container {
     background-color: #fff;
@@ -82,12 +82,13 @@
 }
 
 .list-table {
-    max-height: 320px;
+    max-height: 280px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
     align-items: center;;
     padding-right: 10px;
+    margin-bottom: 15px;
     gap: 20px;
 }
 
@@ -161,6 +162,42 @@
 .status-badge.declined {
     background-color: #f8d7da;
     color: #721c24;
+}
+
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+.pag-btn {
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+}
+
+.pag-btn:hover:not(:disabled) {
+    background-color: #f6f6f6;
+    border-color: #999;
+}
+
+.pag-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+#pageInfo {
+    font-size: 0.9rem;
+    color: #666;
+    font-weight: 600;
 }
 
 .modal {

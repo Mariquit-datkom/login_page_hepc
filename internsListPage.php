@@ -15,7 +15,7 @@
 
     // Intern Details
     try {
-        $stmt = $pdo->prepare("SELECT * FROM intern_list ORDER BY intern_last_name ASC");
+        $stmt = $pdo->prepare("SELECT * FROM intern_list ORDER BY intern_last_name DESC");
         $stmt->execute();
         $interns = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -49,10 +49,10 @@
             <div class="sort-entries">
                 <label>Show </label>
                 <select name="entries-select" id="entries-select">
-                    <option value="10">10</option>
-                    <option value="20">20</option>
-                    <option value="50">50</option>
                     <option value="all">All</option>
+                    <option value="10">3</option>
+                    <option value="20">5</option>
+                    <option value="50">10</option>
                 </select>
                 <label> entries</label>
             </div>
@@ -61,7 +61,7 @@
                 <button type="submit" class="search-btn"><i class="fas fa-search"></i></button>
             </div>
         </div>
-        <div class="list-table"></div>
+        <div class="list-table">
             <?php if (empty($interns)): ?>
                 <p class="no-interns" style='padding: 20px; text-align: center; color: #666;'>No interns / trainees registered yet.</p>
             <?php else: ?>
@@ -81,7 +81,13 @@
                     </div>
                 <?php endforeach; ?>
             <?php endif; ?>
-      </div>
+        </div>
+        <div class="pagination-controls">
+            <button id="prevBtn" class="pag-btn"><i class="fas fa-chevron-left"></i> Previous</button>
+            <span id="pageInfo">Page 1</span>
+            <button id="nextBtn" class="pag-btn">Next <i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
 
       <div id="intern-modal" class="modal">
         <div class="modal-content">
