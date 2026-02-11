@@ -104,3 +104,38 @@
 .result-container {
     font-size: 18px;
 }
+
+@media (max-width: 500px) {
+
+    .welcome-message-container {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .welcome-message {
+        margin: 0;
+        font-size: 1.5rem;
+    }
+
+    .live-clock-container {
+        margin-bottom: 10px;
+    }
+    
+    .content-container {
+        flex-direction: column;
+    }
+
+    .left-container {
+        flex-direction: row;
+        width: 100%;
+    }
+
+    .real-time-notif-container {
+        width: 100%;
+        min-height: 380px !important;
+    }
+
+    .modal-content {
+        max-width: 400px;
+    }
+}
