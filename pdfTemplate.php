@@ -28,7 +28,7 @@ $hourProgress = htmlspecialchars($intern['accumulated_hours'] . " / " . $intern[
     <table class="table-content">
         <tr style="background-color: #52a0ff">
             <td style="height:40px; text-align:center">
-                <span>
+                <span style="font-size: 20px; font-weight: 800">
                     INTERN PROFILE SHEET
                 </span>
             </td>
