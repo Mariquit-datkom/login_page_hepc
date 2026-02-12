@@ -195,6 +195,11 @@
     color: #721c24;
 }
 
+.status-badge.deleted {
+    background-color: #b1b1b1;
+    color: #262626;
+}
+
 .clickable-request {
     cursor: pointer;
     transition: background-color 0.2s;
@@ -243,6 +248,7 @@
 
 .modal-body {
     padding: 20px;
+    padding-bottom: 5px;
 }
 
 .modal-text-area {
@@ -285,6 +291,28 @@
     background-color: #f8f9fa;
     border-radius: 8px;
     color: #333;
+}
+
+.request-main {
+    border-top: #dbdbdb 2px solid;
+    margin-bottom: 15px;
+}
+
+.request-window-btn {  
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 15px;
+    width: 70px;
+    color: #fcfcfc;
+}
+
+.edit-request {
+    background-color: #32749a;
+}
+
+.delete-request {
+    background-color: #aa0a1a;  
 }
 
 @media (max-width: 1100px) {

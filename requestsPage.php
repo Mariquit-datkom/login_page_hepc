@@ -18,8 +18,8 @@
         $sql = "SELECT r.*, i.intern_first_name, i.intern_last_name, i.intern_middle_initial 
                 FROM request_list r
                 LEFT JOIN intern_list i ON r.submitted_by = i.intern_display_id
-                ORDER BY r.submitted_by ASC, 
-                        FIELD(r.request_status, 'Pending', 'Approved', 'Declined') ASC, 
+                ORDER BY r.submitted_by ASC,
+                        r.request_date DESC, 
                         r.request_time DESC";
                         
         $stmt = $pdo->prepare($sql);
@@ -126,8 +126,8 @@
                     <div id="modalAttachment"></div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn-accept" onclick="updateRequestStatus('Approved')">Approve</button>
-                    <button class="btn-decline" onclick="updateRequestStatus('Declined')">Decline</button>
+                    <button class="btn-accept modal-btn" onclick="updateRequestStatus('Approved')">Approve</button>
+                    <button class="btn-decline modal-btn" onclick="updateRequestStatus('Declined')">Decline</button>
                 </div>
             </div>
         </div>
@@ -138,6 +138,8 @@
     <script src="js/backBtnKiller.js"></script>
     <script src="js/sendHeartbeat.js"></script>
     <script src="js/modalRequestsList.js"></script>
-    <script src="js/notifRedirect.js"></script>
+    <script src="js/updateRequestStatus.js"></script>
+    <script src="js/requestsPageSorter.js"></script>
+    <script src="js/pendingListRedirect.js"></script>
 </body>
 </html>

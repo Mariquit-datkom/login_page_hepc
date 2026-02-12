@@ -164,6 +164,11 @@ body { overflow: hidden; }
     color: #721c24;
 }
 
+.status-badge.deleted {
+    background-color: #b1b1b1;
+    color: #262626;
+}
+
 .pagination-controls {
     display: flex;
     justify-content: center;

@@ -73,7 +73,7 @@
             </div>
             <!-- Notification Table -->
             <div class="real-time-notif-container">
-                <h2 class="container-label">Notifications</h2>
+                <h2 class="container-label">New Pending Requests</h2>
                 <div id="notification-list" class="notification-list"></div>
             </div>
         </div>

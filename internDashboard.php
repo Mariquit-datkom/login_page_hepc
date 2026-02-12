@@ -29,10 +29,10 @@
     $percentage = ($total_hours_needed > 0) ? ($accumulated_hours / $total_hours_needed) * 100 : 0;
     $percentage = min(100, max(0, $percentage));
 
-    $sql_requests = "SELECT request_date, request_time, request_subject, request_status, request_main 
+    $sql_requests = "SELECT request_no, request_date, request_time, request_subject, request_status, request_main 
                 FROM request_list 
-                WHERE submitted_by = :intern_id 
-                ORDER BY FIELD(request_status, 'Pending', 'Approved', 'Declined') ASC, request_time DESC";
+                WHERE submitted_by = :intern_id AND request_status != 'Deleted'
+                ORDER BY FIELD(request_status, 'Pending', 'Approved', 'Declined') ASC, request_date DESC, request_time DESC";
     $stmt_req = $pdo->prepare($sql_requests);
     $stmt_req->execute(['intern_id' => $intern_display_id]);
     $requests = $stmt_req->fetchAll(PDO::FETCH_ASSOC);
@@ -169,11 +169,17 @@
                 <span class="close-btn" onclick="closeModal()">&times;</span>
             </div>
             <div class="modal-body">
-                <p><strong>Date:</strong> <span id="modalDate"></span></p>
-                <p><strong>Status:</strong> <span id="modalStatus" class="status-badge"></span></p>
-                <hr>
-                <p><strong>Message:</strong></p>
-                <div id="modalMainRequest" class="modal-text-area"></div>
+                <form action="editRequest.php" method="post">
+                    <input type="hidden" name="request_no" id="modalRequestNo">
+                    <p><strong>Date:</strong> <span id="modalDate"></span></p>
+                    <p><strong>Status:</strong> <span id="modalStatus" class="status-badge"></span></p>
+                    <div class="request-main">
+                        <p><strong>Message:</strong></p>
+                        <div id="modalMainRequest" class="modal-text-area"></div>
+                    </div>
+                    <input type="submit" class="edit-request request-window-btn" id="edit-request" value="Edit">
+                    <input type="submit" onclick="deletePendingRequest()" class="delete-request request-window-btn" id="delete-request" value="Delete">
+                </form>
             </div>
         </div>
     </div>
@@ -185,5 +191,6 @@
     <script src="js/liveClock.js"></script>
     <script src="js/modalRequestWindow.js"></script>
     <script src="js/modalProgressTracker.js"></script>
+    <script src="js/deletePendingRequest.js"></script>
 </body>
 </html>
