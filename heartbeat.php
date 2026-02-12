@@ -17,7 +17,7 @@
 
             $sql = "SELECT request_no, submitted_by, request_subject, request_status, request_date, request_time 
                     FROM request_list WHERE request_status = 'Pending'
-                    ORDER BY request_date DESC, request_time DESC LIMIT 5";
+                    ORDER BY FIELD (request_status, 'Pending', 'Approved', 'Declined', 'Deleted'), request_no DESC LIMIT 5";
             $stmt = $pdo->query($sql);
             
             $response = [

@@ -23,9 +23,11 @@ $mpdf = new \Mpdf\Mpdf([
 ]);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['intern_display_id'])) {
-    $internDisplayId = $_POST['intern_display_id'];
-    echo $internDisplayId;
+    $stmt = $pdo->prepare('SELECT username FROM users WHERE user_id = ?');
+    $stmt->execute([$_POST['user_id']]);
+    $systemUser = $stmt->fetch(PDO::FETCH_ASSOC);
 
+    $internDisplayId = $_POST['intern_display_id'];
     $stmt = $pdo->prepare('SELECT * FROM intern_list WHERE intern_display_id = ?');
     $stmt->execute([$internDisplayId]);
     $intern = $stmt ->fetch(PDO::FETCH_ASSOC);

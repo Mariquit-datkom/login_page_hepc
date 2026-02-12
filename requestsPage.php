@@ -18,9 +18,7 @@
         $sql = "SELECT r.*, i.intern_first_name, i.intern_last_name, i.intern_middle_initial 
                 FROM request_list r
                 LEFT JOIN intern_list i ON r.submitted_by = i.intern_display_id
-                ORDER BY r.submitted_by ASC,
-                        r.request_date DESC, 
-                        r.request_time DESC";
+                ORDER BY FIELD (r.request_status, 'Pending', 'Approved', 'Declined', 'Deleted'), r.request_no DESC";
                         
         $stmt = $pdo->prepare($sql);
         $stmt->execute();

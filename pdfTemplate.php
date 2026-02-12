@@ -93,6 +93,14 @@ $hourProgress = htmlspecialchars($intern['accumulated_hours'] . " / " . $intern[
                 <?php echo htmlspecialchars($intern['date_of_employment']); ?>
             </td>
         </tr>
+        <tr>
+            <td class="row-header">
+                SYSTEM USERNAME
+            </td>
+            <td>
+                <?php echo htmlspecialchars($systemUser['username']); ?>
+            </td>
+        </tr>
     </table>
     <table class="table-content">
         <tr style="background-color: #b4b4b4;">
