@@ -56,7 +56,7 @@
                 </div>
                 <div class="form-group"> <!-- Attachment Field -->
                     <label for="attachment" class="form-label">Attachment (PDF / JPG / PNG):</label>
-                    <input type="file" id="attachment" name="attachment[]" class="general-input" accept=".pdf, .jpg, .jpeg, .png" multiple>
+                    <input type="file" id="attachment" name="attachment[]" class="general-input" onchange="checkFileLimit(this)" accept=".pdf, .jpg, .jpeg, .png" multiple>
                 </div>
             </div>
             <div class="row">
@@ -77,5 +77,6 @@
     <script src="js/dropDownMenu.js"></script>
     <script src="js/backBtnKiller.js"></script>
     <script src="js/sendHeartbeat.js"></script>
+    <script src="js/fileLimit.js"></script>
 </body>
 </html>

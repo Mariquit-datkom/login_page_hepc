@@ -12,18 +12,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $mainRequest = $_POST['main-request'];
     $submittedBy = $_SESSION['intern_display_id'];
     $status = "Pending";
+    $requestNoFromEdit = $_POST['request_no'] ?? null;
 
     try {
         $pdo->beginTransaction(); //Doesn't save any changes permanently yet
 
         // Inserts form data into database table
-        $sql = "INSERT INTO request_list (request_date, request_time, submitted_by, request_subject, request_main, request_status) 
-                VALUES (?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO request_list (request_no, request_date, request_time, submitted_by, request_subject, request_main, request_status) 
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+                ON DUPLICATE KEY UPDATE
+                    request_subject = VALUES(request_subject),
+                    request_date = VALUES(request_date),
+                    request_time = VALUES(request_time),
+                    request_main = VALUES(request_main)";
         $stmt = $pdo->prepare($sql);
-        $stmt->execute([$date, $time, $submittedBy, $subject, $mainRequest, $status]);
+        $stmt->execute([$requestNoFromEdit, $date, $time, $submittedBy, $subject, $mainRequest, $status]);
 
         // Fetches formatted request number for dashboard display
-        $requestNo = $pdo->lastInsertId();
+        $requestNo = $requestNoFromEdit ?: $pdo->lastInsertId();
         $sql = "SELECT request_no_display FROM request_list WHERE request_no = :request_no";
         $stmt = $pdo->prepare($sql);
         $stmt->execute(['request_no' => $requestNo]);
@@ -32,7 +38,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         // Processes uploaded attachments to save into uploads folder
         $fileNames = [];
-        if (!empty($_FILES['attachment']['name'][0])) {    
+        if (!empty($_FILES['attachment']['name'][0])) {  
+        $fileCount = count($_FILES['attachment']['name']);
+    
+        if ($fileCount > 5) {
+            $pdo->rollBack();
+            die("Error: You cannot upload more than 5 files at once.");
+        }
             $uploadDir = 'uploads/' . $requestNoDisplay . '/';
             if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
 
@@ -67,3 +79,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         die("Error processing request: " . $e->getMessage());
     }
 }
+
+?>

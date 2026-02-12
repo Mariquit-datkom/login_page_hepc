@@ -16,14 +16,14 @@
 
     //Variable declaration and settings
     $currentUser = $_SESSION['username'];
-    $intern_first_name = $_SESSION['intern_first_name'];
-    $intern_display_id = $_SESSION['intern_display_id'];
-    $date_started = $_SESSION['date_started'];
-    $intern_dept = $_SESSION['intern_dept'];
-    $intern_course = $_SESSION['intern_course'];
-    $school = $_SESSION['school'];
-    $accumulated_hours = $_SESSION['accumulated_hours'];
-    $total_hours_needed = $_SESSION['total_hours_needed'];
+    $intern_first_name = $_SESSION['intern_first_name'] ?? "";
+    $intern_display_id = $_SESSION['intern_display_id'] ?? "";
+    $date_started = $_SESSION['date_started'] ?? "";
+    $intern_dept = $_SESSION['intern_dept'] ?? "";
+    $intern_course = $_SESSION['intern_course'] ?? "";
+    $school = $_SESSION['school'] ?? "";
+    $accumulated_hours = $_SESSION['accumulated_hours'] ?? "";
+    $total_hours_needed = $_SESSION['total_hours_needed'] ?? "";
     $currentPage = basename($_SERVER['PHP_SELF']);
 
     $percentage = ($total_hours_needed > 0) ? ($accumulated_hours / $total_hours_needed) * 100 : 0;
@@ -32,7 +32,7 @@
     $sql_requests = "SELECT request_no, request_date, request_time, request_subject, request_status, request_main 
                 FROM request_list 
                 WHERE submitted_by = :intern_id AND request_status != 'Deleted'
-                ORDER BY FIELD(request_status, 'Pending', 'Approved', 'Declined') ASC, request_date DESC, request_time DESC";
+                ORDER BY FIELD(request_status, 'Pending', 'Approved', 'Declined') ASC, CAST(request_no AS UNSIGNED) DESC";
     $stmt_req = $pdo->prepare($sql_requests);
     $stmt_req->execute(['intern_id' => $intern_display_id]);
     $requests = $stmt_req->fetchAll(PDO::FETCH_ASSOC);
