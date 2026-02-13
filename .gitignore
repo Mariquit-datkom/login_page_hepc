@@ -1,6 +1,9 @@
-/vendor/
-/php/
-/uploads/
+# General folders
+vendor/
+php/
+uploads/
 libs/fontawesome-free-7.0.0-web/
+
+# Selective inclusion
 assets/spreadsheets/*
-!assets/spreadsheets/template
+!assets/spreadsheets/template/
