@@ -283,6 +283,10 @@ body { overflow: hidden; }
     margin-right: 8px; 
 }
 
+.attachment-item {
+    margin: 5px 0;
+}
+
 .modal-footer {
     padding: 15px 20px;
     border-top: 1px solid #eee;
