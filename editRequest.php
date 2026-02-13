@@ -17,6 +17,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt = $pdo->prepare("SELECT * FROM request_list WHERE request_no = :request_no");
     $stmt->execute(['request_no' => $requestNo]);
     $request = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Calculates total attachments
+    $existingFiles = array_filter(explode(',', $request['request_attachment'])); 
+    $currentCount = count($existingFiles);
 }
 
 ?>
@@ -37,6 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
         <form action="submitRequestAuth.php" method="POST" enctype="multipart/form-data" autocomplete="off">
             <input type="hidden" name="request_no" value="<?php echo $requestNo ?>">
+            <input type="hidden" id="existing-file-count" value="<?php echo $currentCount; ?>">
             <div class="row">
                 <div class="form-group"> <!-- Subject Input Field -->
                     <label for="request-subject" class="form-label">Subject:</label>
@@ -48,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>                
                 <div class="form-group"> <!-- Additional Attachment Field -->
                     <label for="attachment" class="form-label">Upload Additional Files:</label>
-                    <input type="file" id="attachment" name="attachment[]" class="general-input" onchange="checkFileLimit(this)" accept=".pdf, .jpg, .jpeg, .png" multiple>
+                    <input type="file" id="attachment" name="attachment[]" class="general-input" onchange="validateFileLimit(this)" accept=".pdf, .jpg, .jpeg, .png" multiple>
                 </div>
             </div>
             <div class="row main-request-area">
@@ -87,7 +92,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>  
     
     <!-- Scripts -->
-     <script src="js/sendHeartbeat.js"></script>
+    <script src="js/sendHeartbeat.js"></script>
     <script src="js/fileLimit.js"></script>
+    <script src="js/fileRemoval.js"></script>
 </body>
 </html>

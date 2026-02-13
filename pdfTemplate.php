@@ -106,7 +106,7 @@ $hourProgress = htmlspecialchars($intern['accumulated_hours'] . " / " . $intern[
         <tr style="background-color: #b4b4b4;">
             <td style="text-align: center; font-size: 11px;">
                 <?php echo date("M d, Y - h:i:s A") ?>
-            </td>
+            </td>   
         </tr>
     </table>
 </body>

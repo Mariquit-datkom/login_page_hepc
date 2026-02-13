@@ -110,6 +110,12 @@ body {
     color: #0066cc;    
 }
 
+.file-item.marked-for-removal a {
+    text-decoration: line-through !important;
+    color: #ff0000 !important;
+    opacity: 0.6;
+}
+
 .btn-submit-container {
    display: flex;
    align-items: center;
