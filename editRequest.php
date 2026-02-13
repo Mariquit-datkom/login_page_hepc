@@ -82,8 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <?php endforeach; ?>
                     </div>
                 </div>
-            </div>
-            
+            </div>            
             <div class="btn-submit-container">
                 <input type="submit" value="Submit Edited Request" class="btn-submit">
             </div>

@@ -1,3 +1,12 @@
+<!-- --------------------------------------------------
+--
+-- Admin Page Header and Navigation Bar
+--
+-- This file generates header and navigation for all admin pages such as dashboard,
+-- interns list, requests page, referral list, and intern registration
+--
+--------------------------------------------------- -->
+
 <header>
     <!-- Page Header -->
     <div class="header-left"><!-- Company logo and page title -->
@@ -9,6 +18,7 @@
                     case 'adminDashboard.php': echo 'Admin Dashboard'; break;
                     case 'internsListPage.php': echo 'Interns List'; break;
                     case 'requestsPage.php': echo 'Requests List'; break;
+                    case 'referralListPage.php': echo 'Ojt Referral List'; break;
                     case 'registerIntern.php': echo 'Register Intern Account'; break;
                 }
             ?>
@@ -30,11 +40,13 @@
 <nav class="nav-bar">
     <div class="nav-links">
         <?php
+        // Dynamic setting of nav bar link icons
         $navItems = [
-            'adminDashboard.php'   => ['icon' => 'fa-home', 'text' => 'Dashboard'],
-            'internsListPage.php'  => ['icon' => 'fa-clipboard-list', 'text' => 'Interns List'],
-            'requestsPage.php'     => ['icon' => 'fa-question', 'text' => 'Requests'],
-            'registerIntern.php'   => ['icon' => 'fa-pencil', 'text' => 'Register Intern']
+            'adminDashboard.php'    => ['icon' => 'fa-home', 'text' => 'Dashboard'],
+            'internsListPage.php'   => ['icon' => 'fa-clipboard-list', 'text' => 'Interns List'],
+            'requestsPage.php'      => ['icon' => 'fa-question', 'text' => 'Requests'],
+            'referralListPage.php'  => ['icon' => 'fa-user-friends', 'text' => 'Referral List'],
+            'registerIntern.php'    => ['icon' => 'fa-pencil', 'text' => 'Register Intern']
         ];
 
         foreach ($navItems as $page => $details):
