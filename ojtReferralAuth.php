@@ -3,6 +3,10 @@ require_once 'dbConfig.php'; //db connection
 session_start(); //session fetch
 
 if(isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    date_default_timezone_set('Asia/Manila');
+    
+    $date = date('M d, Y');
+    $time = date('h:i:s a');
     $referenceName = $_POST['reference-name'];
     $employeeNumber = $_POST['employee-no'];
     $department = $_POST['dept-or-section'];
@@ -14,11 +18,11 @@ if(isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         $pdo->beginTransaction();
 
-        $sql = "INSERT INTO ojt_referral_list (referred_by, employee_no, department_or_section, 
-                ojt_full_name, ojt_course, ojt_total_hours_needed, ojt_school)
-                VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO ojt_referral_list (referral_date, referral_time, referred_by, employee_no, department_or_section, 
+                ojt_full_name, ojt_course, ojt_total_hours_needed, ojt_school, status)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $pdo->prepare($sql);
-        $stmt->execute([$referenceName, $employeeNumber, $department, $internName, $internCourse, $ojtHoursNeeded, $ojtSchool]);
+        $stmt->execute([$date, $time, $referenceName, $employeeNumber, $department, $internName, $internCourse, $ojtHoursNeeded, $ojtSchool, 'Pending']);
 
         $ojtReferralId = $pdo->lastInsertId();
         $stmt = $pdo->prepare("SELECT ojt_referral_display_id FROM ojt_referral_list WHERE ojt_referral_id = ?");

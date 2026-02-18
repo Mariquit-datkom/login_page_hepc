@@ -29,7 +29,7 @@ function showRequestDetails(data, fullName) {
             const folderName = data.request_no_display;
             attachmentContainer.innerHTML = fileArray.map(fileName => `
                 <div class="attachment-item">
-                    <a href="uploads/${folderName}/${fileName}" target="_blank" class="attachment-link">
+                    <a href="uploads/requests/${folderName}/${fileName}" target="_blank" class="attachment-link">
                         <i class="fas fa-file-download"></i> ${fileName}
                     </a>
                 </div>

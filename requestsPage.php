@@ -77,14 +77,10 @@
                     if (!empty(trim($reqs['intern_middle_initial']))) {
                         $fullName .= " " . htmlspecialchars($reqs['intern_middle_initial']) . ".";
                     }
-                ?>
-                
-                <div class="request-item clickable-request" 
-                    data-subject="<?php echo strtolower(htmlspecialchars($reqs['request_subject'])); ?>"
-                    data-name="<?php echo strtolower($fullName); ?>"
-                    onclick="showRequestDetails(<?php echo htmlspecialchars(json_encode($reqs)); ?>, '<?php echo addslashes($fullName); ?>')">
+                ?>                
+                <div class="request-item" onclick="showRequestDetails(<?php echo htmlspecialchars(json_encode($reqs)); ?>, '<?php echo addslashes($fullName); ?>')">
                     <div class="request-details">
-                        <span class="req-subject"> <?php echo htmlspecialchars($reqs['request_subject']); ?> - <?php echo $fullName; ?></span>
+                        <span class="req-subject"><?php echo htmlspecialchars($reqs['request_subject']); ?> - <?php echo $fullName; ?></span>
                         <span class="req-date"><?php echo date('M d, Y', strtotime($reqs['request_date'])); ?> - <?php echo date('h:i:s a', strtotime($reqs['request_time'])) ?></span>
                     </div>
                     <span class="status-badge <?php echo strtolower($reqs['request_status']); ?>">
@@ -101,7 +97,7 @@
         </div>
     </div>
 
-      <!-- Request Pop Up -->
+    <!-- Request Pop Up -->
     <div id="requestModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">

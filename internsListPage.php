@@ -50,9 +50,9 @@
                 <label>Show </label>
                 <select name="entries-select" id="entries-select">
                     <option value="all">All</option>
-                    <option value="10">3</option>
-                    <option value="20">5</option>
-                    <option value="50">10</option>
+                    <option value="3">3</option>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
                 </select>
                 <label> entries</label>
             </div>
@@ -67,7 +67,7 @@
             <?php else: ?>
                 <?php foreach ($interns as $ojt): ?>
                     <!-- Intern Entry -->
-                    <div class="intern-item clickable-intern" 
+                    <div class="intern-item" 
                         onclick="showInternDetails(<?php echo htmlspecialchars(json_encode($ojt)); ?>)">
                         <!-- Intern Summary -->
                         <div class="intern-details">
@@ -109,5 +109,6 @@
     <script src="js/backBtnKiller.js"></script>
     <script src="js/sendHeartbeat.js"></script>
     <script src="js/modalInternsList.js"></script>
+    <script src="js/internsListPageSorter.js"></script>
 </body>
 </html>

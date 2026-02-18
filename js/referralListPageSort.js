@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const searchField = document.getElementById('search-field');
     const entriesSelect = document.getElementById('entries-select');
-    const requestItems = Array.from(document.querySelectorAll('.request-item'));
+    const referralItems = Array.from(document.querySelectorAll('.referral-item'));
     const listTable = document.querySelector('.list-table'); 
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
@@ -11,19 +11,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function updateTable() {
         const searchTerm = searchField.value.toLowerCase();
-        const entriesPerPage = entriesSelect.value === 'all' ? requestItems.length : parseInt(entriesSelect.value);
+        const entriesPerPage = entriesSelect.value === 'all' ? referralItems.length : parseInt(entriesSelect.value);
 
-        const filteredItems = requestItems.filter(item => {
+        // Filter based on ID or Status text
+        const filteredItems = referralItems.filter(item => {
             return item.innerText.toLowerCase().includes(searchTerm);
         });
 
-        let noResultsMsg = document.querySelector('.no-requests');
+        let noResultsMsg = document.querySelector('.no-referrals');
         if (filteredItems.length === 0) {
             if (!noResultsMsg) {
                 noResultsMsg = document.createElement('p');
-                noResultsMsg.className = 'no-requests';
+                noResultsMsg.className = 'no-referrals';
                 noResultsMsg.style.cssText = 'padding: 20px; text-align: center; color: #666; width: 100%;';
-                noResultsMsg.textContent = 'No matching requests found.';
+                noResultsMsg.textContent = 'No matching referral entries found.';
                 listTable.appendChild(noResultsMsg);
             }
         } else if (noResultsMsg) {
@@ -36,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const startIndex = (currentPage - 1) * entriesPerPage;
         const endIndex = startIndex + entriesPerPage;
 
-        requestItems.forEach(item => item.style.display = 'none'); 
+        referralItems.forEach(item => item.style.display = 'none'); 
         
         filteredItems.forEach((item, index) => {
             if (index >= startIndex && index < endIndex) {
@@ -49,27 +50,10 @@ document.addEventListener('DOMContentLoaded', function() {
         nextBtn.disabled = (currentPage === totalPages || filteredItems.length === 0);
     }
 
-    searchField.addEventListener('input', () => {
-        currentPage = 1;
-        updateTable();
-    });
-
-    entriesSelect.addEventListener('change', () => {
-        currentPage = 1;
-        updateTable();
-    });
-
-    prevBtn.addEventListener('click', () => {
-        if (currentPage > 1) {
-            currentPage--;
-            updateTable();
-        }
-    });
-
-    nextBtn.addEventListener('click', () => {
-        currentPage++;
-        updateTable();
-    });
+    searchField.addEventListener('input', () => { currentPage = 1; updateTable(); });
+    entriesSelect.addEventListener('change', () => { currentPage = 1; updateTable(); });
+    prevBtn.addEventListener('click', () => { if (currentPage > 1) { currentPage--; updateTable(); } });
+    nextBtn.addEventListener('click', () => { currentPage++; updateTable(); });
 
     updateTable();
 });

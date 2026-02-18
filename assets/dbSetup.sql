@@ -63,6 +63,8 @@ CREATE TABLE IF NOT EXISTS `intern_list` (
 CREATE TABLE IF NOT EXISTS `ojt_referral_list` (
   `ojt_referral_id` int(15) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `ojt_referral_display_id` varchar(20) GENERATED ALWAYS AS (concat('ojt-referral-',lpad(ojt_referral_id,4,'0'))) VIRTUAL,
+  `referral_date` varchar(15) NOT NULL,
+  `referral_time` varchar(15) NOT NULL,
   `referred_by` varchar(50) NOT NULL,
   `employee_no` varchar(50) NOT NULL,
   `department_or_section` varchar(50) NOT NULL,
@@ -70,7 +72,8 @@ CREATE TABLE IF NOT EXISTS `ojt_referral_list` (
   `ojt_course` varchar(50) NOT NULL,
   `ojt_total_hours_needed` varchar(50) NOT NULL,
   `ojt_school` varchar(50) NOT NULL,
-  `ojt_cv` varchar(255) NOT NULL
+  `ojt_cv` varchar(255) NOT NULL,
+  `status` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
