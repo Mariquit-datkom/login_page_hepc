@@ -1,53 +1,87 @@
-# OJT HR Management System
-This is a personal project developed during my internship at **Hayakawa Electronics (Phils.) Corp.** The primary goal of this system was to practice and master core web development technologies while providing a functional tool for HR-related tasks.
+# OJT-HR Management System
+Internship HR Portal & Workflow Automation System
 
-## :pushpin: Project Overview
-The OJT HR System is designed to streamline basic human resource functions, specifically focusing on data management and document generation. This project served as a hands-on learning experience to transition from theoretical knowledge to building a real-world application.
+## 📌 Overview
 
-## :rocket: Features
-* **Intern Records Management**: Add, update, and manage intern information.
-* **Document Generation**: Export data into professional formatted PDF files.
-* **Data Export / Import**: Generate and handle Excel spreadsheets for reporting.
-* **Intern Referrals**: Operate intern referrals from employees.
+The OJT-HR Management System is a web-based application developed during the early phase of my internship at Hayakawa Electronics (PHILS) Corp.
 
-## :hammer_and_wrench: Tech Stack
-* **Backend**: PHP (core)
-* **Frontend**: Javascript, CSS, HTML
-* **Icons**: [Font Awesome](https://fontawesome.com/)
-* **Libraries**:
-    * [PhpSpreadsheet](https://github.com/PHPOffice/PhpSpreadsheet) - Used for generating and reading Excel Files.
-    * [mPDF](https://github.com/mpdf/mpdf) - Used for converting HTML to PDF documents.
+This project served as my introductory system to the company's development environment, internal workflow structure, and PHP-based technology stack.
 
-## :open_file_folder: Installation
-1. **Clone the repository**: Clone the repo inside your htdocs folder (XAMPP) or www (WAMP) directory.
-```
-git clone https://github.com/Mariquit-datkom/ojt_hr_system
-```
-2. **Install dependencies**: Download and install all external libraries used: (Ensure you have PHP v8.1 or newer)
-    * [Font Awesome](https://fontawesome.com/download): 
-        * Select _Download for Web_ and extract it to a folder named _libs_ inside the project folder.
-        * Open and edit x-head.php:
-        ```
-        <link rel="stylesheet" href="libs/(insert fontawesome folder name here e.g. fontawesome-free-7.0.0-web)/css/all.min.css">
-        ```
-    * PhpSpreadsheet and mPDF: 
-        * If you do not have _composer_ installed, make sure to go to this [link](https://getcomposer.org/Composer-Setup.exe) to download the installation file. Run it and follow the installation process.
-        * With composer installed, open terminal in your project's root folder and run the following:
-        ```
-        composer require phpoffice/phpspreadsheet
-        composer require mpdf/mpdf
-        ```
+The system was designed to digitize trainee hour tracking and streamline HR-related document requests into a centralized web portal.
 
-## :bulb: What I Learned
-* Structuring a PHP-based application from scratch.
-* Integrating third-party PHP libraries via Composer.
-* Handling file streams and document rendering (PDF and Spreadsheet).
-* Developing a dynamic UI for better user experience.
+---
 
-## :open_book: Notes
-* Default credentials for log in:
-    * username: admin
-    * password: 1234
+## 🎯 Project Purpose
 
-## :office: Acknowledgement
-Special thanks to **Hayakawa Electronics (Phils.) Corp.** for the opportunity to learn and grow during my internship period.
+- Learn and adapt to the company's PHP/MySQL development stack
+- Understand internal HR workflow processes
+- Practice structured database design in a production environment
+- Implement document automation using external PHP libraries
+
+This project became the foundation for more advanced systems I later developed during the internship.
+
+---
+
+## 🚀 Key Features
+
+- 📋 Trainee hour progress tracking against required benchmarks
+- 📄 Digital request submission system routed directly to HR
+- 📊 Automated report generation
+- 📑 PDF generation using mPDF
+- 📈 Spreadsheet export functionality using PhpSpreadsheet
+- 🔐 Secure login authentication system
+
+---
+
+## 🏗 Tech Stack
+
+- **Frontend:** HTML5, CSS3, JavaScript
+- **Backend:** PHP
+- **Database:** MySQL
+- **Libraries:**
+  - mPDF (PDF generation)
+  - PhpSpreadsheet (Excel export)
+- **Version Control:** Git & GitHub
+
+---
+
+## 👨‍💻 My Role
+
+As a Trainee Programmer Intern, I:
+
+- Designed and structured the relational database schema
+- Developed backend logic for trainee tracking and document routing
+- Integrated third-party PHP libraries for PDF and Excel generation
+- Implemented authentication and session handling
+- Managed version control and repository updates using Git
+
+---
+
+## ⚠ Current Status
+
+This system is partially complete and served as my onboarding project into the company's development workflow.
+
+While not fully deployed enterprise-wide, it successfully demonstrated:
+
+- Backend logic structuring
+- Database normalization practices
+- Secure authentication handling
+- Integration of document automation tools
+
+The experience gained from this project directly contributed to the development of more advanced production-level systems later in my internship (e.g., HEPC-NetPulse and Biometric Data Purge System).
+
+---
+
+## 📚 Lessons Learned
+
+- Structuring modular PHP applications
+- Managing relational database relationships
+- Integrating third-party libraries
+- Understanding internal enterprise workflow design
+- Writing cleaner, maintainable backend code
+
+---
+
+## 📄 License
+
+Developed for internship and educational purposes.
